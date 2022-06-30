@@ -1,0 +1,553 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "Swagger Artsy"
+    },
+    "host": "artsy-az.herokuapp.com",
+    "basePath": "/api/v1",
+    "tags": [
+        {
+            "name": "product",
+            "description": "Operations about products"
+        },
+        {
+            "name": "category",
+            "description": "Operations about categories"
+        },
+        {
+            "name": "banner",
+            "description": "Operations about banners"
+        },
+        {
+            "name": "customer",
+            "description": "Operations about customers"
+        }
+    ],
+    "schemes": [
+        "https"
+    ],
+    "paths": {
+        "/products": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Получение списка товаров",
+                "parameters": [
+                    {
+                        "name": "filter[categoryIds]",
+                        "in": "query",
+                        "description": "Enables filtering by categories",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter[ownerId]",
+                        "in": "query",
+                        "description": "Enables filtering by owner",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "_enables[]",
+                        "in": "query",
+                        "description": "Дополнительные параметры в ответе",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "ownerData",
+                                "priceRange"
+                            ]
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/inline_response_200"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request params"
+                    }
+                }
+            }
+        },
+        "/products/vip": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Получение списка VIP товаров",
+                "parameters": [
+                    {
+                        "name": "filter[categoryIds]",
+                        "in": "query",
+                        "description": "Enables filtering by categories",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter[ownerId]",
+                        "in": "query",
+                        "description": "Enables filtering by owner",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "_enables[]",
+                        "in": "query",
+                        "description": "Дополнительные параметры в ответе",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "ownerData",
+                                "priceRange"
+                            ]
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/inline_response_200"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request params"
+                    }
+                }
+            }
+        },
+        "/products/recent-viewed": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Получение списка недавно просмотренных товаров",
+                "parameters": [
+                    {
+                        "name": "filter[categoryIds]",
+                        "in": "query",
+                        "description": "Enables filtering by categories",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter[ownerId]",
+                        "in": "query",
+                        "description": "Enables filtering by owner",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "_enables[]",
+                        "in": "query",
+                        "description": "Дополнительные параметры в ответе",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "ownerData",
+                                "priceRange"
+                            ]
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/inline_response_200"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request params"
+                    }
+                }
+            }
+        },
+        "/products/wish-list": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Получение списка избранных товаров",
+                "parameters": [
+                    {
+                        "name": "filter[categoryIds]",
+                        "in": "query",
+                        "description": "Enables filtering by categories",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "filter[ownerId]",
+                        "in": "query",
+                        "description": "Enables filtering by owner",
+                        "required": false,
+                        "type": "string"
+                    },
+                    {
+                        "name": "_enables[]",
+                        "in": "query",
+                        "description": "Дополнительные параметры в ответе",
+                        "required": false,
+                        "type": "array",
+                        "items": {
+                            "type": "string",
+                            "enum": [
+                                "ownerData",
+                                "priceRange"
+                            ]
+                        },
+                        "collectionFormat": "multi"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/inline_response_200"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request params"
+                    }
+                }
+            }
+        },
+        "/products/my": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Получение списка моих товаров",
+                "parameters": [
+                    {
+                        "name": "filter[categoryIds]",
+                        "in": "query",
+                        "description": "Enables filtering by categories",
+                        "required": false,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/inline_response_200"
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request params"
+                    }
+                }
+            }
+        },
+        "/products/{productId}": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "Детальная информация о товаре",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "description": "ID of product",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/categories": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Получение дерева категорий",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/inline_response_200_1"
+                        }
+                    }
+                }
+            }
+        },
+        "/categories/{categoryId}": {
+            "get": {
+                "tags": [
+                    "category"
+                ],
+                "summary": "Детальная информация о категории",
+                "parameters": [
+                    {
+                        "name": "categoryId",
+                        "in": "path",
+                        "description": "ID of category",
+                        "required": true,
+                        "type": "string",
+                        "format": "uuid"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/banners": {
+            "get": {
+                "tags": [
+                    "banner"
+                ],
+                "summary": "Получение списка баннеров",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/customers/popular": {
+            "get": {
+                "tags": [
+                    "customer"
+                ],
+                "summary": "Получение списка популярных пользователей",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Category": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Одежда и обувь"
+                },
+                "is_new": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "children": {
+                    "type": "array",
+                    "example": [
+                        {
+                            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "title": "Украшения для вечеринок",
+                            "is_new": false,
+                            "children": [
+                                {
+                                    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                                    "title": "Украшения для вечеринок",
+                                    "is_new": false,
+                                    "children": []
+                                }
+                            ]
+                        },
+                        {
+                            "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                            "title": "Украшения для вечеринок",
+                            "is_new": false,
+                            "children": []
+                        }
+                    ],
+                    "items": {
+                        "$ref": "#/definitions/Category"
+                    }
+                }
+            }
+        },
+        "Product": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string",
+                    "format": "uuid"
+                },
+                "image": {
+                    "type": "string",
+                    "example": "https://i.etsystatic.com/22592098/r/il/9c7b3b/3566076413/il_1588xN.3566076413_a0ym.jpg"
+                },
+                "title": {
+                    "type": "string",
+                    "example": "Багаж Бирка Роскошный чемодан Бирка Персонализированная сумка"
+                },
+                "descrption": {
+                    "type": "string",
+                    "example": "Модель выполнена из хлопка, отложной воротник, застежка на пуговицах, боковые карманы."
+                },
+                "price": {
+                    "type": "string",
+                    "example": "494.45"
+                },
+                "price_with_discount": {
+                    "type": "string",
+                    "example": "300.00"
+                },
+                "discount": {
+                    "type": "integer",
+                    "example": 20,
+                    "description": "Скидка в процентах"
+                },
+                "rating": {
+                    "type": "integer",
+                    "example": 4
+                },
+                "ratings_count": {
+                    "type": "integer",
+                    "example": 130
+                },
+                "is_wish": {
+                    "type": "boolean",
+                    "example": false
+                },
+                "is_top_seller": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "owner": {
+                    "$ref": "#/definitions/Product_owner"
+                },
+                "priceRange": {
+                    "$ref": "#/definitions/Product_priceRange"
+                }
+            }
+        },
+        "PaginationMeta": {
+            "type": "object",
+            "properties": {
+                "current_page": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "last_page": {
+                    "type": "integer",
+                    "example": 3
+                },
+                "per_page": {
+                    "type": "integer",
+                    "example": 8
+                },
+                "total": {
+                    "type": "integer",
+                    "example": 22
+                },
+                "from": {
+                    "type": "integer",
+                    "example": 1
+                },
+                "to": {
+                    "type": "integer",
+                    "example": 8
+                }
+            }
+        },
+        "inline_response_200": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Product"
+                    }
+                },
+                "meta": {
+                    "$ref": "#/definitions/PaginationMeta"
+                }
+            }
+        },
+        "inline_response_200_1": {
+            "type": "object",
+            "properties": {
+                "data": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Category"
+                    }
+                }
+            }
+        },
+        "Product_owner_location": {
+            "type": "object",
+            "properties": {
+                "latitude": {
+                    "type": "integer",
+                    "example": "50.4529635"
+                },
+                "longitude": {
+                    "type": "integer",
+                    "example": "50.4529622"
+                }
+            }
+        },
+        "Product_owner": {
+            "type": "object",
+            "properties": {
+                "full_name": {
+                    "type": "string",
+                    "example": "Adidas Azerbaijan"
+                },
+                "avatar": {
+                    "type": "string",
+                    "example": "url"
+                },
+                "phone": {
+                    "type": "string",
+                    "example": "+994 50 993 55 55"
+                },
+                "location": {
+                    "$ref": "#/definitions/Product_owner_location"
+                }
+            }
+        },
+        "Product_priceRange": {
+            "type": "object",
+            "properties": {
+                "from": {
+                    "type": "string",
+                    "example": "20.14"
+                },
+                "to": {
+                    "type": "string",
+                    "example": "830.97"
+                }
+            }
+        }
+    }
+}

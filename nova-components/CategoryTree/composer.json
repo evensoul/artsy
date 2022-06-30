@@ -1,0 +1,41 @@
+{
+    "name": "fereron/category-tree",
+    "description": "A Laravel Nova tool.",
+    "keywords": [
+        "laravel",
+        "nova"
+    ],
+    "license": "MIT",
+    "require": {
+        "php": "^7.3|^8.0",
+        "doctrine/dbal": ">=2.0.0",
+        "laravel/nova": "^4.0",
+        "outl1ne/nova-translations-loader": "^5.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Fereron\\CategoryTree\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Fereron\\CategoryTree\\CategoryTreeServiceProvider"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        }
+    ],
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
