@@ -15,6 +15,9 @@ class ProductRepository
     {
         return Product::query()
             ->where('status', ProductStatus::ACTIVE)
+            ->when($productFilterRequest->ownerId, function (Builder $qb) use ($productFilterRequest) {
+                return $qb->where('owner_id', $productFilterRequest->ownerId);
+            })
 //            ->when(
 //                in_array(ProductFilterRequest::VISITOR_OWNER_DATA, $productFilterRequest->_enables),
 //                fn(Builder $qb) => $qb->with('owner')

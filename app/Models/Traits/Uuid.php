@@ -11,14 +11,17 @@ trait Uuid
     protected static function boot(): void
     {
         parent::boot();
+
         static::creating(function ($model) {
             $model->setAttribute($model->getKeyName(), (string) Str::uuid());
         });
     }
+
     public function getIncrementing(): bool
     {
         return false;
     }
+
     public function getKeyType(): string
     {
         return 'string';

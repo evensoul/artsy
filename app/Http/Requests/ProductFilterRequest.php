@@ -9,6 +9,7 @@ use Illuminate\Validation\Rule;
 /**
  * @property array _enables
  * @property array categoryIds
+ * @property string ownerId
  */
 class ProductFilterRequest extends ApiFormRequest
 {
@@ -22,9 +23,4 @@ class ProductFilterRequest extends ApiFormRequest
             '_enables.*' => ['nullable', 'string', Rule::in([self::VISITOR_OWNER_DATA, self::VISITOR_PRICE_RANGE])],
         ];
     }
-
-//    protected function passedValidation()
-//    {
-//        $this->perPage ??= '8';
-//    }
 }

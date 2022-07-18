@@ -9,6 +9,7 @@ use App\Models\Traits\Uuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property string id
@@ -18,7 +19,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string price
  * @property string|null priceWithDiscount
  * @property integer|null discount
- * @property integer rating
+ * @property float rating
  * @property boolean is_preorder
  * @property \Carbon\Carbon published_at
  */
@@ -39,5 +40,10 @@ class Product extends Model
                 return \bcsub($this->price, $discountPrice);
             }
         );
+    }
+
+    public function owner(): BelongsTo
+    {
+        return $this->belongsTo(Customer::class, 'owner_id');
     }
 }

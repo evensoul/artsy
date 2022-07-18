@@ -19,6 +19,6 @@ class ApiFormRequest extends FormRequest
                 'message' => 'Invalid request parameters'
             ],
             'errors' => $validator->errors(),
-        ]));
+        ], Response::HTTP_BAD_REQUEST));
     }
 }
