@@ -5,9 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use App\Models\Customer;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
 
-final class UpdateProfileRequest extends ApiRequest
+final class UpdateProfileRequest extends FormRequest
 {
     public function authorize(): bool
     {

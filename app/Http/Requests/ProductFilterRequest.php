@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
 /**
@@ -11,7 +12,7 @@ use Illuminate\Validation\Rule;
  * @property array categoryIds
  * @property string ownerId
  */
-class ProductFilterRequest extends ApiRequest
+class ProductFilterRequest extends FormRequest
 {
     public const VISITOR_OWNER_DATA = 'ownerData';
     public const VISITOR_PRICE_RANGE = 'priceRange';
