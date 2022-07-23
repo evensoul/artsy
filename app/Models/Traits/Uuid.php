@@ -13,7 +13,9 @@ trait Uuid
         parent::boot();
 
         static::creating(function ($model) {
-            $model->setAttribute($model->getKeyName(), (string) Str::uuid());
+            if (empty($model->getAttribute($model->getKeyName()))) {
+                $model->setAttribute($model->getKeyName(), (string) Str::uuid());
+            }
         });
     }
 

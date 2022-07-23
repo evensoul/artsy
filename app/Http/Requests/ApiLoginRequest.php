@@ -8,7 +8,7 @@ namespace App\Http\Requests;
  * @property string email
  * @property string password
  */
-class ApiLoginRequest extends ApiFormRequest
+class ApiLoginRequest extends ApiRequest
 {
     public function rules(): array
     {

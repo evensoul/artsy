@@ -6,15 +6,20 @@ use App\Models\Traits\Uuid;
 use App\Nova\MenuBuilder\CategoryType;
 use Carbon\Carbon;
 use Database\Factories\CategoryFactory;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Fereron\CategoryTree\MenuBuilder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 /**
  * @property int id
  * @property string title
+ * @property string parent_id
  * @property Carbon created_at
+ * @property Category parent
+ * @property Collection children
  */
 final class Category extends Model
 {
@@ -39,7 +44,12 @@ final class Category extends Model
 
     public function children()
     {
-        return $this->hasMany(static::class, 'parent_id')->with('children')->orderBy('order');
+        return $this->hasMany(self::class, 'parent_id')->with('children')->orderBy('order');
+    }
+
+    public function parent(): BelongsTo
+    {
+        return $this->belongsTo(self::class, 'parent_id');
     }
 
     public function itemsChildren($parentId)

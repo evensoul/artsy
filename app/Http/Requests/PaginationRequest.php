@@ -7,7 +7,7 @@ namespace App\Http\Requests;
 /**
  * @property string perPage
  */
-class PaginationRequest extends ApiFormRequest
+class PaginationRequest extends ApiRequest
 {
     public function rules()
     {

@@ -6,13 +6,12 @@ namespace App\Actions\Profile;
 
 use App\Dto\CustomerDto;
 use App\Models\Customer;
+use App\Service\ImageStorage\ImageStorage;
 use Illuminate\Contracts\Hashing\Hasher;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Str;
 
 final class UpdateCustomerAction
 {
-    public function __construct(private Hasher $hasher)
+    public function __construct(private Hasher $hasher, private ImageStorage $imageStorage)
     {
     }
 
@@ -25,11 +24,11 @@ final class UpdateCustomerAction
         $customer->description = $dto->description;
 
         if (!empty($dto->avatar)) {
-            $customer->avatar = sprintf('storage/%s', $this->saveBase64Image($dto->avatar));
+            $customer->avatar = sprintf('storage/%s', $this->imageStorage->upload($dto->avatar));
         }
 
         if (!empty($dto->cover)) {
-            $customer->cover = sprintf('storage/%s', $this->saveBase64Image($dto->cover));
+            $customer->cover = sprintf('storage/%s', $this->imageStorage->upload($dto->cover));
         }
 
         if (!empty($dto->password)) {
@@ -39,24 +38,5 @@ final class UpdateCustomerAction
         $customer->save();
 
         return $customer;
-    }
-
-    private function saveBase64Image(string $image_64): string
-    {
-        $extension = explode('/', explode(':', substr($image_64, 0, strpos($image_64, ';')))[1])[1];   // .jpg .png .pdf
-
-        $replace = substr($image_64, 0, strpos($image_64, ',')+1);
-
-        // find substring fro replace here eg: data:image/png;base64,
-
-        $image = str_replace($replace, '', $image_64);
-
-        $image = str_replace(' ', '+', $image);
-
-        $imageName = Str::random(10).'.'.$extension;
-
-        Storage::disk('public')->put($imageName, base64_decode($image));
-
-        return $imageName;
     }
 }

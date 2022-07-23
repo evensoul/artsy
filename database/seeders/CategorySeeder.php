@@ -12,7 +12,7 @@ class CategorySeeder extends Seeder
 {
     public function run(): void
     {
-        DB::table('categories')->truncate();
+//        DB::table('categories')->truncate();
 
         Category::factory(6)
             ->has(

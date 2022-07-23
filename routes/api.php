@@ -16,7 +16,8 @@ Route::prefix('products')->group(function () {
     Route::get('vip', [Controller\ProductController::class, 'vip']);
     Route::get('recent-viewed', [Controller\ProductController::class, 'recentViewed']);
     Route::get('wish-list', [Controller\ProductController::class, 'wishList']);
-    Route::get('my', [Controller\ProductController::class, 'my']);
+    Route::post('/', [Controller\ProductController::class, 'create'])->middleware('auth:sanctum');
+    Route::get('my', [Controller\ProductController::class, 'my'])->middleware('auth:sanctum');
     Route::get('{id}', [Controller\ProductController::class, 'show']);
 });
 

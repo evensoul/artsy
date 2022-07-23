@@ -11,7 +11,7 @@ use Illuminate\Validation\Rule;
  * @property array categoryIds
  * @property string ownerId
  */
-class ProductFilterRequest extends ApiFormRequest
+class ProductFilterRequest extends ApiRequest
 {
     public const VISITOR_OWNER_DATA = 'ownerData';
     public const VISITOR_PRICE_RANGE = 'priceRange';

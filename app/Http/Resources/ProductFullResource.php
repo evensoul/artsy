@@ -20,21 +20,28 @@ final class ProductFullResource extends JsonResource
     public function toArray($request): array
     {
         /** @var Product $this */
+
+        $images = [];
+        foreach ($this->images as $image) {
+            $images[] = asset($image);
+        }
+
         return [
-            'id' => $this->id,
-            'images' => [
-                self::images[0], self::images[1], self::images[2]
-            ],
-            'title' => $this->title,
-            'description' => $this->description,
-            'price' => $this->price,
-            'price_with_discount' => $this->priceWithDiscount,
-            'discount' => $this->discount,
-            'published_at' => $this->published_at,
-            'rating' => $this->rating,
-            'ratings_count' => \random_int(10, 200),
-            'is_preorder' => \random_int(0, 1),
-            'is_wish' => \random_int(0, 100) < 5,
+            'id'                    => $this->id,
+            'images'                => $images,
+            'title'                 => $this->title,
+            'description'           => $this->description,
+            'price'                 => $this->price,
+            'price_with_discount'   => $this->priceWithDiscount,
+            'published_at'          => $this->published_at,
+            'rating'                => $this->rating,
+            'ratings_count'         => \random_int(10, 200),
+            'views_count'           => \random_int(10, 1000),
+            'is_preorder'           => $this->is_preorder,
+            'is_wish'               => \random_int(0, 100) < 10,
+            'has_review_with_photo' => \random_int(0, 100) < 5,
+            'owner'                 => new ProductOwnerResource($this->owner),
+            'category'              => new ProductCategoryResource($this->categories()->first()),
         ];
     }
 }

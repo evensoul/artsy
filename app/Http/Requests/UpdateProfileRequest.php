@@ -7,7 +7,7 @@ namespace App\Http\Requests;
 use App\Models\Customer;
 use Illuminate\Support\Facades\Hash;
 
-final class UpdateProfileRequest extends ApiFormRequest
+final class UpdateProfileRequest extends ApiRequest
 {
     public function authorize(): bool
     {

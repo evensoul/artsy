@@ -9,7 +9,7 @@ namespace App\Http\Requests;
  * @property string email
  * @property string password
  */
-class RegisterRequest extends ApiFormRequest
+class RegisterRequest extends ApiRequest
 {
     public function rules(): array
     {

@@ -21,9 +21,11 @@ return new class extends Migration
             $table->string('title');
             $table->string('description', 1000);
             $table->decimal('price', 16)->unsigned();
+            $table->string('discount_type')->nullable();
             $table->tinyInteger('discount')->unsigned()->nullable();
             $table->unsignedFloat('rating')->default(0);
             $table->boolean('is_preorder');
+            $table->json('images')->nullable();
             $table->timestamps();
             $table->timestamp('published_at')->nullable();
         });

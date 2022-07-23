@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Actions\Product\CreateProductAction;
+use App\Dto\ProductDto;
+use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\ProductFilterRequest;
 use App\Http\Resources\ProductFullResource;
+use App\Http\Resources\ProductMyResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Enums\ProductStatus;
 use App\Models\Product;
@@ -56,17 +60,29 @@ class ProductController
     public function my(PaginationRequest $request): JsonResource
     {
         $productsQuery = Product::query()
-            ->where('status', ProductStatus::ACTIVE)
-            ->inRandomOrder();
+            ->where('owner_id', $request->user()->id);
 
-        return ProductResource::collection($productsQuery->paginate($request->perPage));
+        return ProductMyResource::collection($productsQuery->paginate($request->perPage));
     }
 
     public function show(string $id): JsonResource
     {
         $product = Product::query()
+            ->with([
+                'owner',
+                'category' => ['parent']
+            ])
             ->where('status', ProductStatus::ACTIVE)
             ->findOrFail($id);
+
+        return new ProductFullResource($product);
+    }
+
+    public function create(CreateProductRequest $request, CreateProductAction $action): JsonResource
+    {
+        $productDto = new ProductDto(... $request->validatedWithCasts());
+        $productDto->owner_id = $request->user()->id;
+        $product = $action->execute($productDto);
 
         return new ProductFullResource($product);
     }
