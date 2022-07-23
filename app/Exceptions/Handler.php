@@ -53,7 +53,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e): Response
     {
-        if ($request->wantsJson() || $request->ajax()) {
+        if ($request->wantsJson() || $request->ajax() || \str_contains($request->route()->getPrefix(), 'api')) {
             $statusCode = ($e instanceof HttpExceptionInterface)
                 ? $e->getStatusCode()
                 : Response::HTTP_INTERNAL_SERVER_ERROR;
