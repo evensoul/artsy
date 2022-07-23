@@ -12,7 +12,7 @@ final class CategoryResource extends JsonResource
         /** @var Category $this */
         return [
             'id' => $this->id,
-            'title' => $this->title['en'],
+            'title' => $this->title,
             'is_new' => $this->created_at->gt(now()->subWeek()), // todo discuss
             'children' => CategoryResource::collection($this->children),
         ];

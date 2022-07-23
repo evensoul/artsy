@@ -14,7 +14,11 @@ final class CategoryFactory extends Factory
     public function definition(): array
     {
         return [
-            'title' => ['en' => $this->faker->words(random_int(1, 3), true)],
+            'title' => [
+                'en' => $this->faker->words(1, true),
+                'ru' => $this->faker->words(2, true),
+                'az' => $this->faker->words(3, true),
+            ],
             'order' => 0,
         ];
     }

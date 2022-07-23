@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Fereron\CategoryTree\MenuBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Spatie\Translatable\HasTranslations;
 
 /**
  * @property int id
@@ -23,16 +24,16 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  */
 final class Category extends Model
 {
-    use Uuid, HasFactory;
+    use Uuid, HasTranslations, HasFactory;
 
     protected $table = 'categories';
     protected $fillable = ['menu_id', 'title', 'parent_id', 'order', 'is_active'];
     protected $with = ['children'];
     protected $class = CategoryType::class;
+    public $translatable = ['title'];
 
     protected $casts = [
         'is_active' => 'boolean',
-        'title' => 'array',
     ];
 
     protected $appends = ['enabledClass', 'displayValue', 'fields'];

@@ -16,6 +16,8 @@ return new class extends Migration
         Schema::create('product_category', function (Blueprint $table) {
             $table->foreignUuid('product_id')->constrained('products');
             $table->foreignUuid('category_id')->constrained('categories');
+
+            $table->primary(['product_id', 'category_id']);
         });
     }
 
