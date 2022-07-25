@@ -13,7 +13,7 @@ final class CategoryController
     /**
      * @todo add filter 'name'
      */
-    public function list(): JsonResource
+    public function tree(): JsonResource
     {
         $categoriesQuery = Category::query()
             ->with(['children'])

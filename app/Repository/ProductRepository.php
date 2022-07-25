@@ -18,10 +18,11 @@ class ProductRepository
             ->when($productFilterRequest->ownerId, function (Builder $qb) use ($productFilterRequest) {
                 return $qb->where('owner_id', $productFilterRequest->ownerId);
             })
-//            ->when(
-//                in_array(ProductFilterRequest::VISITOR_OWNER_DATA, $productFilterRequest->_enables),
-//                fn(Builder $qb) => $qb->with('owner')
-//            )
+            ->when(
+                !empty($productFilterRequest->_enables)
+                && in_array(ProductFilterRequest::VISITOR_OWNER_DATA, $productFilterRequest->_enables),
+                fn(Builder $qb) => $qb->with('owner')
+            )
             ->orderByDesc('published_at');
     }
 }

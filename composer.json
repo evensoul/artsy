@@ -17,6 +17,7 @@
         "laravel/sanctum": "^2.14.1",
         "laravel/tinker": "^2.7",
         "socialiteproviders/zoho": "^4.1",
+        "spatie/eloquent-sortable": "^4.0",
         "spatie/laravel-translatable": "^6.0"
     },
     "require-dev": {

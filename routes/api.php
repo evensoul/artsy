@@ -9,7 +9,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('categories', [Controller\CategoryController::class, 'list']);
+Route::get('categories-tree', [Controller\CategoryController::class, 'tree']);
 
 Route::prefix('products')->group(function () {
     Route::get('/', [Controller\ProductController::class, 'list']);
@@ -29,7 +29,7 @@ Route::get('auth/me', [Controller\AuthController::class, 'profile'])->middleware
 Route::get('customers/{customer}', [Controller\ProfileController::class, 'index']);
 Route::patch('customers/{customer}', [Controller\ProfileController::class, 'update'])->middleware('auth:sanctum');
 
-
+Route::get('banners', [Controller\BannerController::class, 'list']);
 
 
 

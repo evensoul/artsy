@@ -11,6 +11,9 @@ use Illuminate\Validation\Rule;
  * @property array _enables
  * @property array categoryIds
  * @property string ownerId
+ * @property string category_ids
+ * @property string sortBy
+ * @property string price
  */
 class ProductFilterRequest extends FormRequest
 {
