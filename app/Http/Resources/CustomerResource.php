@@ -17,8 +17,8 @@ final class CustomerResource extends JsonResource
             'phone' => $this->phone,
             'address' => $this->address,
             'description' => $this->description,
-            'avatar' => asset($this->avatar),
-            'cover' => asset($this->cover),
+            'avatar' => $this->avatar ? asset($this->avatar) : null,
+            'cover' => $this->cover ? asset($this->cover) : null,
             'rating' => 4.2
         ];
     }

@@ -14,11 +14,11 @@ use Laravel\Sanctum\HasApiTokens;
  * @property string name
  * @property string email
  * @property string password
- * @property string phone
- * @property string address
- * @property string description
- * @property string avatar
- * @property string cover
+ * @property null|string phone
+ * @property null|string address
+ * @property null|string description
+ * @property null|string avatar
+ * @property null|string cover
  */
 class Customer extends Authenticatable
 {

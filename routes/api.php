@@ -5,10 +5,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers as Controller;
 use Laravel\Socialite\Facades\Socialite;
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-
 Route::get('categories-tree', [Controller\CategoryController::class, 'tree']);
 
 Route::prefix('products')->group(function () {
