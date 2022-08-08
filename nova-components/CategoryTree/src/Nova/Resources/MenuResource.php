@@ -44,36 +44,9 @@ class MenuResource extends Resource
 
     public function fields(Request $request)
     {
-        $menusTableName = MenuBuilder::getMenusTableName();
-        $menuOptions = collect(MenuBuilder::getMenus())
-            ->mapWithKeys(function ($menu, $key) {
-                return [$key => $menu['name']];
-            })
-            ->toArray();
-
-        $maxDepth = 10;
-        if ($this->slug) $maxDepth = MenuBuilder::getMenuConfig($this->slug)['max_depth'] ?? 10;
+        $maxDepth = 3;
 
         return [
-            Text::make(__('novaMenuBuilder.nameFieldName'), 'name')
-                ->sortable()
-                ->rules('required', 'max:255'),
-
-            Select::make(__('novaMenuBuilder.menuResourceSingularLabel'), 'slug')
-                ->options($menuOptions)
-                ->onlyOnForms()
-                ->creationRules('required', 'max:255', "unique_menu:$menusTableName,slug,NULL,id")
-                ->updateRules('required', 'max:255', "unique_menu:$menusTableName,slug,{{resourceId}},id"),
-
-            Text::make(__('novaMenuBuilder.menuResourceSingularLabel'), 'slug', function ($key) {
-                $menu = MenuBuilder::getMenus()[$key] ?? null;
-                if (!$menu) return "<s>{$key}</s>";
-                return "<span class='whitespace-no-wrap'><b>{$menu['name']}</b> <i>({$key})</i></span>";
-            })
-                ->hideWhenCreating()
-                ->hideWhenUpdating()
-                ->asHtml(),
-
             Panel::make(__('novaMenuBuilder.menuItemsPanelName'), [
                 MenuBuilderField::make('', 'menu_items')
                     ->hideWhenCreating()

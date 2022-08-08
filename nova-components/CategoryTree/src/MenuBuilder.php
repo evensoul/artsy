@@ -23,9 +23,9 @@ class MenuBuilder extends Tool
     public function menu(Request $request)
     {
         // Fereron\CategoryTree\MenuBuilder::getMenuResource()::authorizedToViewAny(request())
-        return MenuSection::make(__('novaMenuBuilder.sidebarTitle'))
-            ->path('/menus')
-            ->icon('adjustments');
+//        return MenuSection::make(__('novaMenuBuilder.sidebarTitle'))
+//            ->path('/menus')
+//            ->icon('adjustments');
     }
 
     /** @noinspection PhpUnhandledExceptionInspection */

@@ -105,11 +105,13 @@ class MenuController extends Controller
         $menuItemModel = MenuBuilder::getMenuItemClass();
 
         $data = $request->getValues();
-        $data['order'] = $menuItemModel::max('id') + 1;
+        $data['order'] = $menuItemModel::max('order') + 1;
 
         $data = [
             'title' => [
-                'en' => $data['data->title']
+                'en' => $data['data->title->en'],
+                'ru' => $data['data->title->ru'],
+                'az' => $data['data->title->az'],
             ],
             'menu_id' => $data['menu_id'],
             'order' => $data['order'],

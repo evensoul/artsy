@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -53,7 +54,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e): Response
     {
-        if ($request->wantsJson() || $request->ajax() || \str_contains($request->route()->getPrefix(), 'api')) {
+        if ($request->wantsJson() || $request->ajax() || \str_contains($request->getPathInfo(), 'api')) {
             $statusCode = ($e instanceof HttpExceptionInterface)
                 ? $e->getStatusCode()
                 : Response::HTTP_INTERNAL_SERVER_ERROR;
@@ -68,6 +69,10 @@ class Handler extends ExceptionHandler
                     'message' => $e->getMessage(),
                 ]
             ];
+
+            if ($e instanceof NotFoundHttpException) {
+                $body['meta']['message'] = 'Not found.';
+            }
 
             if ($e instanceof ValidationException) {
                 $body['errors'] = $e->errors();

@@ -18,7 +18,8 @@ final class CategoryController
         $categoriesQuery = Category::query()
             ->with(['children'])
             ->where('is_active', true)
-            ->whereNull('parent_id');
+            ->whereNull('parent_id')
+            ->orderBy('order');
 
         return CategoryResource::collection($categoriesQuery->get());
     }

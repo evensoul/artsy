@@ -7,7 +7,7 @@ use Fereron\CategoryTree\MenuBuilder;
 
 class Menu extends Model
 {
-    protected $fillable = ['name', 'slug'];
+    protected $fillable = ['id', 'name', 'slug'];
 
     public function __construct(array $attributes = [])
     {

@@ -12,7 +12,7 @@ class BannerController
 {
     public function list(): JsonResource
     {
-        $bannersQuery = Banner::query()->orderByDesc('sort_order');
+        $bannersQuery = Banner::query()->orderBy('sort_order');
 
         return BannerResource::collection($bannersQuery->get());
     }

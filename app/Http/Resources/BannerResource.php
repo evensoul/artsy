@@ -15,7 +15,7 @@ final class BannerResource extends JsonResource
             'title'    => $this->title,
             'subtitle' => $this->subtitle,
             'link'     => $this->link,
-            'cover'    => asset($this->cover),
+            'cover'    => $this->getFirstMediaUrl('cover'),
         ];
     }
 }

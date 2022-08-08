@@ -20,7 +20,7 @@
             @click.prevent="toggleMenuChildrenCascade(item)"
             class="appearance-none cursor-pointer fill-current hover:text-primary flex px-3 items-center focus:outline-none"
           >
-            <Icon :type="isCascadeOpen(item) ? 'chevron-down' : 'chevron-up'" />
+            <Icon :type="!isCascadeOpen(item) ? 'chevron-down' : 'chevron-up'" />
           </button>
 
           <div :class="`text-90 font-bold ${!item.is_active ? 'opacity-25' : ''}`">
@@ -106,11 +106,7 @@ export default {
     },
 
     beforeMove({ dragItem, pathFrom, pathTo }) {
-      if (dragItem.nestable) {
         return true;
-      }
-
-      return pathTo.length === 1;
     },
   },
 };

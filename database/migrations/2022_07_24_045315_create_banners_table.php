@@ -18,7 +18,6 @@ return new class extends Migration
             $table->json('title');
             $table->json('subtitle');
             $table->json('link')->nullable();
-            $table->string('cover');
             $table->smallInteger('sort_order')->default(0);
             $table->timestamps();
         });

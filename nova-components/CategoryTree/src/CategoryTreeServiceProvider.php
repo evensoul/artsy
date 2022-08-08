@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Validator;
 use Fereron\CategoryTree\Http\Middleware\Authorize;
-use Fereron\CategoryTree\Commands\CreateMenuItemType;
 use Outl1ne\NovaTranslationsLoader\LoadsNovaTranslations;
 
 class CategoryTreeServiceProvider extends ServiceProvider

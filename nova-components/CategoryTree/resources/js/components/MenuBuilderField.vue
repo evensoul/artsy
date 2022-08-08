@@ -167,6 +167,7 @@ export default {
       const menuItem = (await api.getMenuItem(item.id)).data;
       this.newItem = menuItem;
       this.showAddModal = true;
+        console.log(menuItem);
       this.linkType = this.menuItemTypes.find(lt => lt.class === this.newItem.class) || {};
     },
 

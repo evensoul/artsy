@@ -2523,12 +2523,7 @@ __webpack_require__.r(__webpack_exports__);
       var dragItem = _ref.dragItem,
           pathFrom = _ref.pathFrom,
           pathTo = _ref.pathTo;
-
-      if (dragItem.nestable) {
-        return true;
-      }
-
-      return pathTo.length === 1;
+      return true;
     }
   }
 });
@@ -2713,11 +2708,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 menuItem = _context3.sent.data;
                 _this3.newItem = menuItem;
                 _this3.showAddModal = true;
+                console.log(menuItem);
                 _this3.linkType = _this3.menuItemTypes.find(function (lt) {
                   return lt["class"] === _this3.newItem["class"];
                 }) || {};
 
-              case 8:
+              case 9:
               case "end":
                 return _context3.stop();
             }
@@ -3401,7 +3397,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
             }, ["prevent"]),
             "class": "appearance-none cursor-pointer fill-current hover:text-primary flex px-3 items-center focus:outline-none"
           }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Icon, {
-            type: $options.isCascadeOpen(item) ? 'chevron-down' : 'chevron-up'
+            type: !$options.isCascadeOpen(item) ? 'chevron-down' : 'chevron-up'
           }, null, 8
           /* PROPS */
           , ["type"])], 8

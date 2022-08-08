@@ -76,6 +76,8 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
 //            new PriceTracker(),
             // todo change to new MenuBuilder()
             MenuBuilder::make(),
+            (new \vmitchell85\NovaLinks\Links())
+                ->addLink('Categories', '/resources/nova-menus/1'),
         ];
     }
 

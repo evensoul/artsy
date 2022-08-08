@@ -15,13 +15,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         Admin::factory()->create([
-             'name' => 'Super Admin',
-             'email' => 'admin@mail.com',
-         ]);
-
         Customer::factory()->create([
-            'name' => 'Super Customer',
+            'name' => 'Customer',
             'email' => 'customer@mail.com',
         ]);
 

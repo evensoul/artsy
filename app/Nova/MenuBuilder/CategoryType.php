@@ -27,7 +27,9 @@ class CategoryType extends BaseMenuItemType
     public static function getFields(): array
     {
         return [
-            Text::make('Title'),
+            Text::make('Title En', 'title->en'),
+            Text::make('Title Az', 'title->az'),
+            Text::make('Title Ru', 'title->ru'),
         ];
     }
 
