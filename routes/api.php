@@ -11,9 +11,14 @@ Route::prefix('products')->group(function () {
     Route::get('/', [Controller\ProductController::class, 'list']);
     Route::get('vip', [Controller\ProductController::class, 'vip']);
     Route::get('recent-viewed', [Controller\ProductController::class, 'recentViewed']);
-    Route::get('wish-list', [Controller\ProductController::class, 'wishList']);
     Route::post('/', [Controller\ProductController::class, 'create'])->middleware('auth:sanctum');
     Route::get('my', [Controller\ProductController::class, 'my'])->middleware('auth:sanctum');
+
+    Route::get('wish-list', [Controller\WishListController::class, 'list'])->middleware('auth:sanctum');
+    Route::post('/{product}/wish-list', [Controller\WishListController::class, 'addProduct'])->middleware('auth:sanctum');
+    Route::delete('/{product}/wish-list', [Controller\WishListController::class, 'removeProduct'])->middleware('auth:sanctum');
+
+
     Route::get('{id}', [Controller\ProductController::class, 'show']);
 });
 

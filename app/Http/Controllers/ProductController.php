@@ -48,15 +48,6 @@ class ProductController
         return ProductResource::collection($productsQuery->paginate($request->perPage));
     }
 
-    public function wishList(PaginationRequest $request): JsonResource
-    {
-        $productsQuery = Product::query()
-            ->where('status', ProductStatus::ACTIVE)
-            ->inRandomOrder();
-
-        return ProductResource::collection($productsQuery->paginate($request->perPage));
-    }
-
     public function my(PaginationRequest $request): JsonResource
     {
         $productsQuery = Product::query()

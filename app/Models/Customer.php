@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Models\Traits\Uuid;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -19,6 +20,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property null|string description
  * @property null|string avatar
  * @property null|string cover
+ * @property Product[] wish_list
  */
 class Customer extends Authenticatable
 {
@@ -51,4 +53,11 @@ class Customer extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function wishList(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Product::class, 'customer_product_wish_list', 'customer_id', 'product_id')
+            ->withTimestamps();
+    }
 }
