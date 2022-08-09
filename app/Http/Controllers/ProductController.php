@@ -9,6 +9,7 @@ use App\Dto\ProductDto;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\ProductFilterRequest;
+use App\Http\Requests\ProductsMyFilterRequest;
 use App\Http\Resources\ProductFullResource;
 use App\Http\Resources\ProductMyResource;
 use App\Http\Resources\ProductResource;
@@ -48,10 +49,9 @@ class ProductController
         return ProductResource::collection($productsQuery->paginate($request->perPage));
     }
 
-    public function my(PaginationRequest $request): JsonResource
+    public function my(PaginationRequest $request, ProductsMyFilterRequest $productFilterRequest): JsonResource
     {
-        $productsQuery = Product::query()
-            ->where('owner_id', $request->user()->id);
+        $productsQuery = $this->productRepository->findMyByCriteriaQB($request->user()->id, $productFilterRequest);
 
         return ProductMyResource::collection($productsQuery->paginate($request->perPage));
     }
