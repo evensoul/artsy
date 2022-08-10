@@ -28,32 +28,40 @@ class ProductController
     {
         $productsQuery = $this->productRepository->findAllByCriteriaQB($productFilterRequest);
 
-        return ProductResource::collection($productsQuery->paginate($paginationRequest->perPage));
+        return ProductResource::collection(
+            $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
+        );
     }
 
-    public function vip(PaginationRequest $request): JsonResource
+    public function vip(PaginationRequest $paginationRequest): JsonResource
     {
         $productsQuery = Product::query()
             ->where('status', ProductStatus::ACTIVE)
             ->inRandomOrder();
 
-        return ProductResource::collection($productsQuery->paginate($request->perPage));
+        return ProductResource::collection(
+            $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
+        );
     }
 
-    public function recentViewed(PaginationRequest $request): JsonResource
+    public function recentViewed(PaginationRequest $paginationRequest): JsonResource
     {
         $productsQuery = Product::query()
             ->where('status', ProductStatus::ACTIVE)
             ->inRandomOrder();
 
-        return ProductResource::collection($productsQuery->paginate($request->perPage));
+        return ProductResource::collection(
+            $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
+        );
     }
 
-    public function my(PaginationRequest $request, ProductsMyFilterRequest $productFilterRequest): JsonResource
+    public function my(PaginationRequest $paginationRequest, ProductsMyFilterRequest $productFilterRequest): JsonResource
     {
-        $productsQuery = $this->productRepository->findMyByCriteriaQB($request->user()->id, $productFilterRequest);
+        $productsQuery = $this->productRepository->findMyByCriteriaQB($productFilterRequest->user()->id, $productFilterRequest);
 
-        return ProductMyResource::collection($productsQuery->paginate($request->perPage));
+        return ProductMyResource::collection(
+            $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
+        );
     }
 
     public function show(string $id): JsonResource

@@ -15,14 +15,16 @@ use Symfony\Component\HttpFoundation\Response;
 
 class WishListController
 {
-    public function list(PaginationRequest $request): JsonResource
+    public function list(PaginationRequest $paginationRequest): JsonResource
     {
         /** @var Customer $customer */
-        $customer = $request->user();
+        $customer = $paginationRequest->user();
         $productsQuery = $customer->wishList()
             ->where('status', ProductStatus::ACTIVE);
 
-        return ProductResource::collection($productsQuery->paginate($request->perPage));
+        return ProductResource::collection(
+            $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
+        );
     }
 
     public function addProduct(string $productId, Request $request): JsonResponse
