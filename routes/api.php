@@ -6,6 +6,7 @@ use App\Http\Controllers as Controller;
 use Laravel\Socialite\Facades\Socialite;
 
 Route::get('categories-tree', [Controller\CategoryController::class, 'tree']);
+Route::get('categories/{category}', [Controller\CategoryController::class, 'show']);
 
 Route::prefix('products')->group(function () {
     Route::get('/', [Controller\ProductController::class, 'list']);

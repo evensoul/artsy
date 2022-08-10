@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\CategoryFullResource;
 use App\Http\Resources\CategoryResource;
 use Fereron\CategoryTree\Models\Category;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -22,5 +23,10 @@ final class CategoryController
             ->orderBy('order');
 
         return CategoryResource::collection($categoriesQuery->get());
+    }
+
+    public function show(Category $category): CategoryFullResource
+    {
+        return new CategoryFullResource($category);
     }
 }

@@ -5,15 +5,16 @@ namespace App\Http\Resources;
 use Fereron\CategoryTree\Models\Category;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class ProductCategoryResource extends JsonResource
+final class CategoryFullResource extends JsonResource
 {
     public function toArray($request): array
     {
-        /** @var Category|ProductCategoryResource $this */
+        /** @var Category $this */
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'parent' => $this->when(null !== $this->parent_id, new ProductCategoryResource($this->parent)),
+            'parent' => new ProductCategoryResource($this->parent),
+            'children' => CategoryResource::collection($this->children),
         ];
     }
 }
