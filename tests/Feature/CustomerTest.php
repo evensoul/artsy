@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\ProfileController;
 use App\Models\Customer;
+use Faker\Factory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
@@ -17,17 +18,16 @@ class CustomerTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutExceptionHandling();
     }
 
-    public function test_view_profile(): void
+    public function view_profile(): void
     {
 //        /** @var Customer $customer */
 //        $customer = Customer::factory()->create();
 
         $response = $this->json('get', sprintf(self::ENDPOINT_VIEW, '48571f82-638d-4037-b903-79c70e63c843'));
 
-        $response->dd();
+//        $response->dd();
     }
 
     /**
@@ -35,13 +35,14 @@ class CustomerTest extends TestCase
      */
     public function test_update_profile(): void
     {
+        $faker = Factory::create();
         /** @var Customer $customer */
         $customer = Customer::factory()->create();
         Sanctum::actingAs($customer);
 
         $customerData = [
             'name' => 'Super test',
-            'email' => 'tester1@mail.com',
+            'email' => $faker->safeEmail,
             'phone' => '+9945512312312',
             'address' => 'Аджеми Нахчывани, 53, Баку 1010, Азербайджан',
             'description' => 'Один из ведущих мировых дизайнерских брендов стиля, получивший признание за прославление сущности классического американского стиля.',

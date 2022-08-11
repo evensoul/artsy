@@ -69,7 +69,7 @@ class ProductController
         $product = Product::query()
             ->with([
                 'owner',
-                'category' => ['parent']
+                'categories' => ['parent']
             ])
             ->where('status', ProductStatus::ACTIVE)
             ->findOrFail($id);

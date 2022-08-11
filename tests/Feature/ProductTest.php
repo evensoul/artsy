@@ -19,7 +19,7 @@ class ProductTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-//        $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
     }
 
     /**
@@ -65,7 +65,7 @@ class ProductTest extends TestCase
             'description' => $productFixture->description,
             'category_id' => Category::factory()->create()->id,
             'price' => '120',
-            'discount_type' => 'percent1',
+            'discount_type' => 'percent',
             'discount' => '50',
             'is_preorder' => $productFixture->is_preorder,
             'images' => [
@@ -74,7 +74,6 @@ class ProductTest extends TestCase
         ];
 
         $response = $this->postJson(self::ENDPOINT_CREATE, $data);
-        $response->dd();
 
         $response->assertStatus(201);
         $this->assertEquals($data['price'], $response->json('data.price'));
@@ -93,7 +92,7 @@ class ProductTest extends TestCase
         $data = [
             'title' => $productFixture->title,
             'description' => $productFixture->description,
-            'category_id' => '02afbf47-edd4-43cf-a49e-1e10195b9b90',// Category::factory()->create()->id,
+            'category_id' => Category::factory()->create()->id,
             'price' => '120',
             'discount_type' => 'fixed',
             'discount' => '40',
