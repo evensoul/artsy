@@ -11,12 +11,12 @@ final class ProductReviewResource extends JsonResource
     {
         /** @var ProductReview|JsonResource $this */
         return [
-            'id' => $this->id,
-            'customer' => new ProductOwnerResource($this->customer),
+            'id'         => $this->id,
+            'customer'   => new ProductOwnerResource($this->customer),
             'product_id' => $this->product_id,
-            'body' => $this->body,
-            'rating' => $this->rating,
-            'image' => asset($this->image),
+            'body'       => $this->body,
+            'rating'     => $this->rating,
+            'images'     => array_map(fn(string $image) => asset($image), $this->images),
             'created_at' => $this->created_at,
         ];
     }

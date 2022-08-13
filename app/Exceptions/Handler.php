@@ -95,7 +95,7 @@ class Handler extends ExceptionHandler
                 $statusCode = Response::HTTP_BAD_REQUEST;
             }
 
-            if (config('app.debug')) {
+            if (config('app.debug') && !app()->environment('testing')) {
                 $body['exception'] = get_class($e);
                 $body['trace'] = $e->getTrace();
             }

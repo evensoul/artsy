@@ -19,7 +19,7 @@ class ProductReviewFactory extends Factory
             'customer_id'  => Customer::factory()->create()->id,
             'product_id'   => Product::factory()->create()->id,
             'body'         => $this->faker->paragraph,
-            'image'        => 'test.png',
+            'images'       => ['test.png'],
             'rating'       => \random_int(1, 5),
             'is_moderated' => true,
         ];

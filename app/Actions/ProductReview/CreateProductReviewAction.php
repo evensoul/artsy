@@ -21,9 +21,19 @@ final class CreateProductReviewAction
         $review->customer_id = $dto->customer_id;
         $review->body = $dto->body;
         $review->rating = $dto->rating;
-        $review->image = $dto->image ? $this->imageStorage->upload($dto->image) : null;
+        $review->images = $this->uploadImages($dto->images);
         $review->save();
 
         return $review;
+    }
+
+    private function uploadImages(array $imagesToUpload): array
+    {
+        $images = [];
+        foreach ($imagesToUpload as $image) {
+            $images[] = $this->imageStorage->upload($image);
+        }
+
+        return $images;
     }
 }

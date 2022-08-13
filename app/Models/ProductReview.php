@@ -15,7 +15,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
  * @property string customer_id
  * @property string product_id
  * @property string body
- * @property string image
+ * @property array images
  * @property int rating
  * @property boolean is_moderated
  * @property Customer customer
@@ -25,6 +25,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class ProductReview extends Model
 {
     use Uuid, HasFactory;
+
+    protected $casts = [
+        'images' => 'array',
+    ];
 
     public function customer(): BelongsTo
     {

@@ -3,10 +3,8 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\ProfileController;
 use App\Models\Customer;
 use Faker\Factory;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Tests\Traits\CustomerStub;
@@ -33,7 +31,7 @@ class CustomerTest extends TestCase
     }
 
     /**
-     * @see ProfileController::update()
+     * @see CustomerController::update()
      */
     public function test_update_profile(): void
     {
@@ -45,7 +43,7 @@ class CustomerTest extends TestCase
         $customerData = [
             'name' => 'Super test',
             'email' => $faker->safeEmail,
-            'phone' => '+9945512312312',
+            'phone' => '+994551231212',
             'address' => 'Аджеми Нахчывани, 53, Баку 1010, Азербайджан',
             'description' => 'Один из ведущих мировых дизайнерских брендов стиля, получивший признание за прославление сущности классического американского стиля.',
             'avatar' => CustomerStub::getFakeAvatarBase64(),
@@ -64,7 +62,7 @@ class CustomerTest extends TestCase
     }
 
     /**
-     * @see ProfileController::update()
+     * @see CustomerController::update()
      */
     public function test_cant_update_other_profile(): void
     {

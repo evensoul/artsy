@@ -18,7 +18,7 @@ return new class extends Migration
             $table->foreignUuid('customer_id')->constrained('customers');
             $table->foreignUuid('product_id')->constrained('products');
             $table->text('body');
-            $table->string('image')->nullable();
+            $table->json('images')->nullable();
             $table->smallInteger('rating')->unsigned();
             $table->boolean('is_moderated')->default(false);
             $table->timestamps();

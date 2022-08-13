@@ -11,6 +11,6 @@ final class ProductReviewDto
         public readonly string $customer_id,
         public readonly string $body,
         public readonly int $rating,
-        public readonly ?string $image = null,
+        public readonly array $images = [],
     ) {}
 }

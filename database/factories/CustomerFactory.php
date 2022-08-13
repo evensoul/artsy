@@ -23,7 +23,7 @@ class CustomerFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition()
+    public function definition(): array
     {
         return [
             'name' => $this->faker->name(),
@@ -32,7 +32,7 @@ class CustomerFactory extends Factory
             'remember_token' => Str::random(10),
             'description' => $this->faker->paragraph,
             'address' => $this->faker->address,
-            'phone' => $this->faker->phoneNumber,
+            'phone' => '+994551231212',
             'avatar' => $this->faker->randomElement(self::AVATAR_URLS),
         ];
     }

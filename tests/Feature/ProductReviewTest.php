@@ -34,7 +34,9 @@ class ProductReviewTest extends TestCase
 
         $data = [
             'body' => 'Test comment for product',
-            'image' => CustomerStub::getFakeAvatarBase64(),
+            'images' => [
+                CustomerStub::getFakeAvatarBase64(),
+            ],
             'rating' => 4,
         ];
 
@@ -43,7 +45,7 @@ class ProductReviewTest extends TestCase
         $response->assertStatus(201);
         $this->assertEquals($data['body'], $response->json('data.body'));
         $this->assertEquals($data['rating'], $response->json('data.rating'));
-        $this->assertNotNull($response->json('data.image'));
+        $this->assertNotEmpty($response->json('data.images'));
     }
 
     /**
