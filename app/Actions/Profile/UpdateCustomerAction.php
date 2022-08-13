@@ -24,11 +24,11 @@ final class UpdateCustomerAction
         $customer->description = $dto->description;
 
         if (!empty($dto->avatar)) {
-            $customer->avatar = sprintf('storage/%s', $this->imageStorage->upload($dto->avatar));
+            $customer->avatar = $this->imageStorage->upload($dto->avatar);
         }
 
         if (!empty($dto->cover)) {
-            $customer->cover = sprintf('storage/%s', $this->imageStorage->upload($dto->cover));
+            $customer->cover = $this->imageStorage->upload($dto->cover);
         }
 
         if (!empty($dto->password)) {

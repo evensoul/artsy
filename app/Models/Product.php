@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 /**
  * @property string id
@@ -29,6 +30,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
  * @property boolean is_preorder
  * @property \Carbon\Carbon published_at
  * @property Customer owner
+ * @property ProductReview[] reviews
  */
 class Product extends Model
 {
@@ -66,5 +68,10 @@ class Product extends Model
     public function categories(): BelongsToMany
     {
         return $this->belongsToMany(Category::class, 'product_category', 'product_id', 'category_id');
+    }
+
+    public function reviews(): HasMany
+    {
+        return $this->hasMany(ProductReview::class);
     }
 }

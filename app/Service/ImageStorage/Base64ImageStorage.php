@@ -24,6 +24,6 @@ class Base64ImageStorage implements ImageStorage
 
         $this->storage->put($fileName, base64_decode($image));
 
-        return $fileName;
+        return sprintf('storage/%s', $fileName);
     }
 }

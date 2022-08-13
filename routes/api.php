@@ -19,6 +19,8 @@ Route::prefix('products')->group(function () {
     Route::post('/{product}/wish-list', [Controller\WishListController::class, 'addProduct'])->middleware('auth:sanctum');
     Route::delete('/{product}/wish-list', [Controller\WishListController::class, 'removeProduct'])->middleware('auth:sanctum');
 
+    Route::get('/{product}/reviews', [Controller\ProductReviewController::class, 'list']);
+    Route::post('/{product}/reviews', [Controller\ProductReviewController::class, 'create'])->middleware('auth:sanctum');
 
     Route::get('{id}', [Controller\ProductController::class, 'show']);
 });

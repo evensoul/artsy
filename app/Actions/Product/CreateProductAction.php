@@ -11,9 +11,7 @@ use Illuminate\Support\Str;
 
 final class CreateProductAction
 {
-    public function __construct(private ImageStorage $imageStorage)
-    {
-    }
+    public function __construct(private ImageStorage $imageStorage) {}
 
     public function execute(ProductDto $dto): Product
     {
@@ -39,7 +37,7 @@ final class CreateProductAction
     {
         $images = [];
         foreach ($imagesToUpload as $image) {
-            $images[] = sprintf('storage/%s', $this->imageStorage->upload($image));
+            $images[] = $this->imageStorage->upload($image);
         }
 
         return $images;
