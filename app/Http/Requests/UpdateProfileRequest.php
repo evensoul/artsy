@@ -22,9 +22,9 @@ final class UpdateProfileRequest extends FormRequest
 
         return [
             'email'       => 'required|string|email|unique:customers,email,' . $customer->email,
-            'name'        => 'required|string',
-            'phone'       => 'nullable|string',
-            'address'     => 'nullable|string',
+            'name'        => 'required|string|max:255',
+            'phone'       => 'required|string|phone:AZ',
+            'address'     => 'nullable|string|max:255',
             'description' => 'nullable|string',
             'avatar'      => 'nullable|base64image|base64max:8000',
             'cover'       => 'nullable|base64image|base64max:8000',

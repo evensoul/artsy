@@ -19,7 +19,6 @@ class AuthTest extends TestCase
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutExceptionHandling();
     }
 
     /**
@@ -31,6 +30,7 @@ class AuthTest extends TestCase
         $customerData = [
             'name' => $faker->name,
             'email' => $faker->email,
+            'phone' => '+994551231212',
             'password' => 'secret',
         ];
 

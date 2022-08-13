@@ -19,6 +19,7 @@
         "laravel/tinker": "^2.7",
         "outl1ne/nova-sortable": "^3.0",
         "outl1ne/nova-translatable": "^2.0",
+        "propaganistas/laravel-phone": "^4.3",
         "socialiteproviders/zoho": "^4.1",
         "spatie/eloquent-sortable": "^4.0",
         "spatie/laravel-medialibrary": "^10.0.0",

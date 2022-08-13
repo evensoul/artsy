@@ -19,6 +19,7 @@ class RegisterAction
         $customer = new Customer();
         $customer->name = $dto->name;
         $customer->email = $dto->email;
+        $customer->phone = $dto->phone;
         $customer->password = $this->hasher->make($dto->password);
         $customer->save();
 
