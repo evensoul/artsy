@@ -3,6 +3,7 @@
 namespace App\Exceptions;
 
 use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
@@ -79,6 +80,12 @@ class Handler extends ExceptionHandler
                 $body['meta']['code'] = Response::HTTP_FORBIDDEN;
                 $body['meta']['message'] = 'This action is unauthorized.';
                 $statusCode = Response::HTTP_FORBIDDEN;
+            }
+
+            if ($e instanceof AuthenticationException) {
+                $body['meta']['code'] = Response::HTTP_UNAUTHORIZED;
+                $body['meta']['message'] = 'Unauthenticated.';
+                $statusCode = Response::HTTP_UNAUTHORIZED;
             }
 
             if ($e instanceof ValidationException) {
