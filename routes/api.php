@@ -30,8 +30,9 @@ Route::post('auth/login', [Controller\AuthController::class, 'login']);
 Route::post('auth/refresh', [Controller\AuthController::class, 'refresh'])->middleware('auth:sanctum');
 Route::get('auth/me', [Controller\AuthController::class, 'profile'])->middleware('auth:sanctum');
 
-Route::get('customers/{customer}', [Controller\ProfileController::class, 'index']);
-Route::patch('customers/{customer}', [Controller\ProfileController::class, 'update'])->middleware('auth:sanctum');
+Route::get('customers/popular', [Controller\CustomerController::class, 'listPopular']);
+Route::get('customers/{customer}', [Controller\CustomerController::class, 'show']);
+Route::patch('customers/{customer}', [Controller\CustomerController::class, 'update'])->middleware('auth:sanctum');
 
 Route::get('banners', [Controller\BannerController::class, 'list']);
 

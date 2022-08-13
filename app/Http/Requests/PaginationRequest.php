@@ -22,7 +22,7 @@ class PaginationRequest extends FormRequest
 
     protected function passedValidation(): void
     {
-        $this->perPage ??= '8';
+        $this->perPage ??= '15';
         $this->page ??= '1';
     }
 }

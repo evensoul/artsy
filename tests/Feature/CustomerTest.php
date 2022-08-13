@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Customer;
 use Faker\Factory;
@@ -14,6 +15,7 @@ class CustomerTest extends TestCase
 {
     private const ENDPOINT_VIEW = 'api/v1/customers/%s';
     private const ENDPOINT_UPDATE = 'api/v1/customers/%s';
+    private const ENDPOINT_LIST_POPULAR = 'api/v1/customers/popular';
 
     protected function setUp(): void
     {
@@ -75,5 +77,16 @@ class CustomerTest extends TestCase
         $response = $this->patchJson(sprintf(self::ENDPOINT_UPDATE, $customer->id), []);
 
         $response->assertStatus(403);
+    }
+
+    /**
+     * @see CustomerController::listPopular()
+     */
+    public function test_list_popular_customers(): void
+    {
+        Customer::factory(5)->create();
+
+        $response = $this->get(self::ENDPOINT_LIST_POPULAR);
+        $response->assertStatus(200);
     }
 }
