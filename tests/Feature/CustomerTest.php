@@ -64,6 +64,30 @@ class CustomerTest extends TestCase
     /**
      * @see CustomerController::update()
      */
+    public function test_update_profile_with_his_email(): void
+    {
+        /** @var Customer $customer */
+        $customer = Customer::factory()->create();
+        Sanctum::actingAs($customer);
+
+        $customerData = [
+            'name' => $customer->name,
+            'email' => $customer->email,
+            'phone' => $customer->phone,
+        ];
+
+        $response = $this->patchJson(sprintf(self::ENDPOINT_UPDATE, $customer->id), $customerData);
+        $response->assertStatus(200);
+
+        $this->assertEquals($customerData['name'], $response->json('data.name'));
+        $this->assertEquals($customerData['email'], $response->json('data.email'));
+        $this->assertEquals($customerData['phone'], $response->json('data.phone'));
+    }
+
+
+    /**
+     * @see CustomerController::update()
+     */
     public function test_cant_update_other_profile(): void
     {
         $this->withExceptionHandling();

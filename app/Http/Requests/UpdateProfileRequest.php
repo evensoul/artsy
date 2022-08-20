@@ -7,6 +7,7 @@ namespace App\Http\Requests;
 use App\Models\Customer;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
 
 final class UpdateProfileRequest extends FormRequest
 {
@@ -21,7 +22,10 @@ final class UpdateProfileRequest extends FormRequest
         $customer = $this->user();
 
         return [
-            'email'       => 'required|string|email|unique:customers,email,' . $customer->email,
+            'email'       => [
+                'required', 'string', 'max:255', 'email',
+                Rule::unique('customers', 'email')->ignore($customer->email, 'email')
+            ],
             'name'        => 'required|string|max:255',
             'phone'       => 'required|string|phone:AZ',
             'address'     => 'nullable|string|max:255',
