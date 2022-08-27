@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 
 use App\Actions\Product\CreateProductAction;
 use App\Dto\ProductDto;
+use App\Events\ProductViewed;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\ProductFilterRequest;
@@ -16,13 +17,15 @@ use App\Http\Resources\ProductResource;
 use App\Models\Enums\ProductStatus;
 use App\Models\Product;
 use App\Repository\ProductRepository;
+use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductController
 {
-    public function __construct(private readonly ProductRepository $productRepository)
-    {
-    }
+    public function __construct(
+        private readonly ProductRepository $productRepository,
+        private readonly Dispatcher $dispatcher,
+    ) {}
 
     public function list(PaginationRequest $paginationRequest, ProductFilterRequest $productFilterRequest): JsonResource
     {
@@ -73,6 +76,8 @@ class ProductController
             ])
             ->where('status', ProductStatus::ACTIVE)
             ->findOrFail($id);
+
+        $this->dispatcher->dispatch(new ProductViewed($product));
 
         return new ProductFullResource($product);
     }

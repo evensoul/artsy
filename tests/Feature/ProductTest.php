@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Http\Controllers\ProductController;
 use App\Models\Customer;
+use App\Models\Enums\ProductStatus;
 use App\Models\Product;
 use Fereron\CategoryTree\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,12 +15,13 @@ use Tests\Traits\CustomerStub;
 class ProductTest extends TestCase
 {
     private const ENDPOINT_CREATE = 'api/v1/products';
+    private const ENDPOINT_SHOW = 'api/v1/products/%s';
     private const ENDPOINT_MY = 'api/v1/products/my';
 
     protected function setUp(): void
     {
         parent::setUp();
-        $this->withoutExceptionHandling();
+//        $this->withoutExceptionHandling();
     }
 
     /**
@@ -119,5 +121,23 @@ class ProductTest extends TestCase
 
         $response->assertStatus(200);
         $this->assertEquals(\count($products), $response->json('meta.total'));
+    }
+
+    public function test_show_product(): void
+    {
+        /** @var Product $productFixture */
+        $productFixture = Product::factory()->create(['status' => ProductStatus::ACTIVE->value]);
+        /** @var Customer $customerFixture */
+        $customerFixture = Customer::factory()->create();
+        Sanctum::actingAs($customerFixture);
+
+        $response = $this->get(sprintf(self::ENDPOINT_SHOW, $productFixture->id));
+
+        $response->assertStatus(200);
+        $this->assertEquals($productFixture->title, $response->json('data.title'));
+        $this->assertEquals($productFixture->description, $response->json('data.description'));
+
+        $customerFixture->refresh();
+        $this->assertEquals(1, $customerFixture->recentViewedProducts->count());
     }
 }

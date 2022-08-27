@@ -3,7 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\Uuid;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -21,6 +21,7 @@ use Laravel\Sanctum\HasApiTokens;
  * @property null|string avatar
  * @property null|string cover
  * @property Product[] wish_list
+ * @property Collection|Product[] recentViewedProducts
  */
 class Customer extends Authenticatable
 {
@@ -59,5 +60,13 @@ class Customer extends Authenticatable
         return $this
             ->belongsToMany(Product::class, 'customer_product_wish_list', 'customer_id', 'product_id')
             ->withTimestamps();
+    }
+
+    public function recentViewedProducts(): BelongsToMany
+    {
+        return $this
+            ->belongsToMany(Product::class, 'product_recent_viewed', 'customer_id', 'product_id')
+            ->withTimestamps()
+            ->orderByPivot('created_at', 'desc');
     }
 }
