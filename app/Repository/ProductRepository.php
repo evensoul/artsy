@@ -28,6 +28,13 @@ class ProductRepository
                 && in_array(ProductFilterRequest::VISITOR_OWNER_DATA, $productFilterRequest->_enables),
                 fn(Builder $qb) => $qb->with('owner')
             )
+            ->when(
+                !empty($productFilterRequest->filter[ProductFilterRequest::FILTER_ATTRIBUTE_VALUES_IDS]), function (Builder $productQb) use ($productFilterRequest) {
+                    return $productQb->whereHas('attributesRelation', function (Builder $attrQb) use ($productFilterRequest) {
+                        return $attrQb->whereIn('id', $productFilterRequest->getFilterAttributeValues());
+                    });
+                }
+            )
             ->orderBy($orderColumn, $orderDirection);
     }
 

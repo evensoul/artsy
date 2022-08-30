@@ -23,6 +23,7 @@ class ProductFilterRequest extends FormRequest
     public const VISITOR_PRICE_RANGE = 'priceRange';
 
     public const FILTER_OWNER_ID = 'ownerId';
+    public const FILTER_ATTRIBUTE_VALUES_IDS = 'attributeValuesIds';
     public const AVAILABLE_SORT = [
         'price_asc',
         'price_desc',
@@ -50,5 +51,10 @@ class ProductFilterRequest extends FormRequest
         return $this->query('sort')
             ? substr($this->query('sort'), strpos($this->query('sort'), "_") + 1)
             : null;
+    }
+
+    public function getFilterAttributeValues(): array
+    {
+        return explode(',', $this->filter[self::FILTER_ATTRIBUTE_VALUES_IDS]);
     }
 }
