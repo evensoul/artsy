@@ -30,6 +30,10 @@ final class CreateProductAction
 
         $product->categories()->attach($dto->category_id);
 
+        foreach ($dto->attributes as $attribute) {
+            $product->attributesRelation()->attach($attribute);
+        }
+
         return $product;
     }
 

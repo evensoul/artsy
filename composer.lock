@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1ed4bec1be4080f2dcbd4926176d49fc",
+    "content-hash": "de759b5fc8bd2279c8538d1731d40b2e",
     "packages": [
         {
             "name": "box/spout",
@@ -3414,6 +3414,73 @@
                 "source": "https://github.com/nikic/PHP-Parser/tree/v4.14.0"
             },
             "time": "2022-05-31T20:59:12+00:00"
+        },
+        {
+            "name": "outl1ne/nova-multiselect-field",
+            "version": "4.0.10",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/outl1ne/nova-multiselect-field.git",
+                "reference": "baa8a234c56b025baa6fc7ec9decef6f973a8ad3"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/outl1ne/nova-multiselect-field/zipball/baa8a234c56b025baa6fc7ec9decef6f973a8ad3",
+                "reference": "baa8a234c56b025baa6fc7ec9decef6f973a8ad3",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^4.1",
+                "outl1ne/nova-translations-loader": "^5.0",
+                "php": ">=8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Outl1ne\\MultiselectField\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Outl1ne\\MultiselectField\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Tarvo Reinpalu",
+                    "email": "tarvoreinpalu@gmail.com",
+                    "role": "Developer"
+                },
+                {
+                    "name": "Optimist Digital",
+                    "email": "info@optimistdigital.com",
+                    "role": "Maintainer"
+                }
+            ],
+            "description": "A multiple select field for Laravel Nova.",
+            "keywords": [
+                "laravel",
+                "multiselect",
+                "nova",
+                "select"
+            ],
+            "support": {
+                "issues": "https://github.com/outl1ne/nova-multiselect-field/issues",
+                "source": "https://github.com/outl1ne/nova-multiselect-field/tree/4.0.10"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/outl1ne",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-07-28T09:09:07+00:00"
         },
         {
             "name": "outl1ne/nova-sortable",
@@ -7674,6 +7741,73 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.11.0"
             },
             "time": "2022-06-03T18:03:27+00:00"
+        },
+        {
+            "name": "whitecube/nova-flexible-content",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/whitecube/nova-flexible-content.git",
+                "reference": "3eae3123d5f52be04270b03eecbcefb78bfee3c0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/whitecube/nova-flexible-content/zipball/3eae3123d5f52be04270b03eecbcefb78bfee3c0",
+                "reference": "3eae3123d5f52be04270b03eecbcefb78bfee3c0",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^8.0|^9.0",
+                "laravel/nova": "^4.0",
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Whitecube\\NovaFlexibleContent\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Whitecube\\NovaFlexibleContent\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Toon Van den Bos",
+                    "email": "toon@whitecube.be"
+                }
+            ],
+            "description": "Flexible Content & Repeater Fields for Laravel Nova.",
+            "keywords": [
+                "Flexible",
+                "field",
+                "group",
+                "laravel",
+                "layout",
+                "nova",
+                "repeat"
+            ],
+            "support": {
+                "issues": "https://github.com/whitecube/nova-flexible-content/issues",
+                "source": "https://github.com/whitecube/nova-flexible-content/tree/v1.0.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/whitecube",
+                    "type": "github"
+                }
+            ],
+            "time": "2022-07-26T13:33:57+00:00"
         }
     ],
     "packages-dev": [

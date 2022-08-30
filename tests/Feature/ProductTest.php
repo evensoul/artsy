@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use App\Http\Controllers\ProductController;
+use App\Models\Attribute;
+use App\Models\AttributeValue;
 use App\Models\Customer;
 use App\Models\Enums\ProductStatus;
 use App\Models\Product;
@@ -109,6 +111,40 @@ class ProductTest extends TestCase
         $response->assertStatus(201);
         $this->assertEquals($data['price'], $response->json('data.price'));
         $this->assertEquals('80', $response->json('data.price_with_discount'));
+    }
+
+    /**
+     * @see ProductController::create()
+     */
+    public function test_product_create_with_attributes(): void
+    {
+        /** @var Product $productFixture */
+        $productFixture = Product::factory()->make();
+        /** @var Category $categoryFixture */
+        $categoryFixture = Category::factory()->create();
+        /** @var Attribute $attributeFixture */
+        $attributeFixture = Attribute::factory()->create();
+        $attributeValues = AttributeValue::factory(4)->create(['attribute_id' => $attributeFixture->id]);
+        $attributeFixture->categories()->attach($categoryFixture->id);
+
+        Sanctum::actingAs(Customer::factory()->create());
+
+        $data = [
+            'title' => $productFixture->title,
+            'description' => $productFixture->description,
+            'category_id' => Category::factory()->create()->id,
+            'price' => $productFixture->price,
+            'is_preorder' => $productFixture->is_preorder,
+            'images' => [CustomerStub::getFakeAvatarBase64()],
+            'attributes' => [
+                $attributeValues->first()->id
+            ],
+        ];
+
+        $response = $this->postJson(self::ENDPOINT_CREATE, $data);
+
+        $response->assertStatus(201);
+        $this->assertEquals($data['attributes'][0], $response->json('data.attributes.0.attribute_value_id'));
     }
 
     public function test_my_products(): void

@@ -22,6 +22,7 @@ final class CreateProductRequest extends FormRequest
             'is_preorder' => 'nullable|boolean',
             'images' => 'required|array|max:4',
             'images.*' => 'base64image|base64max:8000',
+            'attributes' => 'nullable|array',
         ];
     }
 

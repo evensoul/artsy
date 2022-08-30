@@ -26,6 +26,7 @@ final class ProductFullResource extends JsonResource
             'has_review_with_photo' => \random_int(0, 100) < 5,
             'owner'                 => new ProductOwnerResource($this->owner),
             'category'              => new ProductCategoryResource($this->categories()->first()),
+            'attributes'            => ProductAttributeResource::collection($this->attributesRelation),
         ];
     }
 }

@@ -20,7 +20,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string parent_id
  * @property Carbon created_at
  * @property Category parent
- * @property Collection children
+ * @property Collection|Category[] children
  */
 final class Category extends Model
 {

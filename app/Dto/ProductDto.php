@@ -18,5 +18,6 @@ final class ProductDto
         public null|string $owner_id = null,
         public readonly bool $is_preorder = false,
         public readonly array $images = [],
+        public readonly array $attributes = [], // todo use mapper and map to ProductCreateAttributeDto
     ) {}
 }

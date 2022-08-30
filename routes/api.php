@@ -8,6 +8,8 @@ use Laravel\Socialite\Facades\Socialite;
 Route::get('categories-tree', [Controller\CategoryController::class, 'tree']);
 Route::get('categories/{category}', [Controller\CategoryController::class, 'show']);
 
+Route::get('attributes', [Controller\AttributeController::class, 'list']);
+
 Route::prefix('products')->group(function () {
     Route::get('/', [Controller\ProductController::class, 'list']);
     Route::get('vip', [Controller\ProductController::class, 'vip']);
