@@ -8,12 +8,14 @@ use App\Models\Enums\ProductDiscountType;
 use App\Models\Enums\ProductStatus;
 use App\Models\Traits\Uuid;
 use Fereron\CategoryTree\Models\Category;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Laravel\Scout\Searchable;
 
 /**
  * @property string id
@@ -34,13 +36,35 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  */
 class Product extends Model
 {
-    use Uuid, HasFactory;
+    use Uuid, HasFactory, Searchable;
 
     protected $casts = [
         'discount_type' => ProductDiscountType::class,
         'status' => ProductStatus::class,
         'images' => 'array',
     ];
+
+    public function searchableAs(): string
+    {
+        return 'products_index';
+    }
+
+    public function toSearchableArray(): array
+    {
+        return [
+            'title' => $this->title,
+        ];
+    }
+
+    protected function makeAllSearchableUsing(Builder $query): Builder
+    {
+        return $query->with('categories');
+    }
+
+    public function shouldBeSearchable(): bool
+    {
+        return $this->status === ProductStatus::ACTIVE;
+    }
 
     public function priceWithDiscount(): Attribute
     {

@@ -12,6 +12,7 @@ Route::get('attributes', [Controller\AttributeController::class, 'list']);
 
 Route::prefix('products')->group(function () {
     Route::get('/', [Controller\ProductController::class, 'list']);
+    Route::get('search', [Controller\ProductController::class, 'search']);
     Route::get('vip', [Controller\ProductController::class, 'vip']);
     Route::get('recent-viewed', [Controller\ProductController::class, 'recentViewed']);
     Route::post('/', [Controller\ProductController::class, 'create'])->middleware('auth:sanctum');

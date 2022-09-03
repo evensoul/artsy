@@ -11,6 +11,7 @@ use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\ProductFilterRequest;
 use App\Http\Requests\ProductsMyFilterRequest;
+use App\Http\Requests\ProductsSearchRequest;
 use App\Http\Resources\ProductFullResource;
 use App\Http\Resources\ProductMyResource;
 use App\Http\Resources\ProductResource;
@@ -89,5 +90,14 @@ class ProductController
         $product = $action->execute($productDto);
 
         return new ProductFullResource($product);
+    }
+
+    public function search(PaginationRequest $paginationRequest, ProductsSearchRequest $productsSearchRequest): JsonResource
+    {
+        $productsSearchQuery = Product::search($productsSearchRequest->q);
+
+        return ProductResource::collection(
+            $productsSearchQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
+        );
     }
 }
