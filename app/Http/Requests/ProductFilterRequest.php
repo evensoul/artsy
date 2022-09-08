@@ -24,6 +24,10 @@ class ProductFilterRequest extends FormRequest
 
     public const FILTER_OWNER_ID = 'ownerId';
     public const FILTER_ATTRIBUTE_VALUES_IDS = 'attributeValuesIds';
+    public const FILTER_PRICE_MIN = 'price_min';
+    public const FILTER_PRICE_MAX = 'price_max';
+    public const FILTER_HAS_DISCOUNT = 'has_discount';
+
     public const AVAILABLE_SORT = [
         'price_asc',
         'price_desc',

@@ -16,15 +16,10 @@ use Tests\Traits\CustomerStub;
 
 class ProductTest extends TestCase
 {
+    private const ENDPOINT_LIST = 'api/v1/products';
     private const ENDPOINT_CREATE = 'api/v1/products';
     private const ENDPOINT_SHOW = 'api/v1/products/%s';
     private const ENDPOINT_MY = 'api/v1/products/my';
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-//        $this->withoutExceptionHandling();
-    }
 
     /**
      * @see ProductController::create()
@@ -175,5 +170,15 @@ class ProductTest extends TestCase
 
         $customerFixture->refresh();
         $this->assertEquals(1, $customerFixture->recentViewedProducts->count());
+    }
+
+    /**
+     * @see ProductController::list()
+     */
+    public function test_product_list_with_filters(): void
+    {
+        $response = $this->get(self::ENDPOINT_LIST . '?_enables[]=priceRange');
+
+        $response->assertStatus(200);
     }
 }

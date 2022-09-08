@@ -12,6 +12,7 @@ use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\ProductFilterRequest;
 use App\Http\Requests\ProductsMyFilterRequest;
 use App\Http\Requests\ProductsSearchRequest;
+use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductFullResource;
 use App\Http\Resources\ProductMyResource;
 use App\Http\Resources\ProductResource;
@@ -30,9 +31,9 @@ class ProductController
 
     public function list(PaginationRequest $paginationRequest, ProductFilterRequest $productFilterRequest): JsonResource
     {
-        $productsQuery = $this->productRepository->findAllByCriteriaQB($productFilterRequest);
+        $productsQuery = ProductRepository::findAllByCriteriaQB($productFilterRequest);
 
-        return ProductResource::collection(
+        return new ProductCollection(
             $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
         );
     }

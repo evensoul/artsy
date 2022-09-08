@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Http\Requests\ProductFilterRequest;
 use App\Models\Product;
+use App\Repository\ProductRepository;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 final class ProductResource extends JsonResource
@@ -25,7 +26,11 @@ final class ProductResource extends JsonResource
             'owner' => $this->when(
                 in_array(ProductFilterRequest::VISITOR_OWNER_DATA, $request->get('_enables', [])),
                 new ProductOwnerResource($this->owner)
-            )
+            ),
+//            'price_range' => $this->when(
+//                in_array(ProductFilterRequest::VISITOR_PRICE_RANGE, $request->get('_enables', [])),
+//                new ProductPriceRangeResource(ProductRepository::getPriceRange($request)->get())
+//            ),
         ];
     }
 }
