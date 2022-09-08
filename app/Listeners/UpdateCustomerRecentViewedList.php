@@ -30,6 +30,8 @@ class UpdateCustomerRecentViewedList
             $customer->recentViewedProducts()->detach($last->id);
         }
 
-        $customer->recentViewedProducts()->attach($event->product->id);
+        if (null === $customer->recentViewedProducts->where('id', $event->product->id)->first()) {
+            $customer->recentViewedProducts()->attach($event->product->id);
+        }
     }
 }
