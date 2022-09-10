@@ -14,12 +14,14 @@ use App\Http\Requests\ProductsMyFilterRequest;
 use App\Http\Requests\ProductsSearchRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductFullResource;
+use App\Http\Resources\ProductMyFullResource;
 use App\Http\Resources\ProductMyResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Enums\ProductStatus;
 use App\Models\Product;
 use App\Repository\ProductRepository;
 use Illuminate\Contracts\Events\Dispatcher;
+use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductController
@@ -67,6 +69,19 @@ class ProductController
         return ProductMyResource::collection(
             $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
         );
+    }
+
+    public function showMy(string $id, Request $request): JsonResource
+    {
+        $product = Product::query()
+            ->with([
+                'owner',
+                'categories' => ['parent']
+            ])
+            ->where('owner_id', $request->user()->id)
+            ->findOrFail($id);
+
+        return new ProductMyFullResource($product);
     }
 
     public function show(string $id): JsonResource
