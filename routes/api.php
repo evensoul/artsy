@@ -39,6 +39,11 @@ Route::get('customers/{customer}', [Controller\CustomerController::class, 'show'
 Route::patch('customers/{customer}', [Controller\CustomerController::class, 'update'])->middleware('auth:sanctum');
 
 Route::get('banners', [Controller\BannerController::class, 'list']);
+Route::get('about/faq', [Controller\StaticPageController::class, 'faq']);
+Route::get('about/how-works', [Controller\StaticPageController::class, 'howWorks']);
+Route::get('about/safe-shopping', [Controller\StaticPageController::class, 'safeShopping']);
+Route::get('about/terms-of-use', [Controller\StaticPageController::class, 'termsOfUse']);
+Route::get('about/confidentiality', [Controller\StaticPageController::class, 'confidentiality']);
 
 
 
