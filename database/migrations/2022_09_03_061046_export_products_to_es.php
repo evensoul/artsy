@@ -13,9 +13,9 @@ return new class extends Migration
      */
     public function up()
     {
-        Product::query()
-            ->where('status', ProductStatus::ACTIVE)
-            ->searchable();
+//        Product::query()
+//            ->where('status', ProductStatus::ACTIVE)
+//            ->searchable();
     }
 
     /**
