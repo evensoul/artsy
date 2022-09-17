@@ -37,10 +37,6 @@ class Attribute extends Resource
                     ->resolver(AttributeValueResolver::class)
                     ->button('Add value')
             ]),
-
-            Panel::make('Values', [
-
-            ]),
         ];
     }
 }
