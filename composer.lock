@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "281bfd53c2277556e3422f5e40c97d11",
+    "content-hash": "4cb33b8dc4df944c0a5c3504063fee89",
     "packages": [
         {
             "name": "box/spout",
@@ -5214,6 +5214,69 @@
                 "source": "https://github.com/Roave/Signature/tree/1.5.0"
             },
             "time": "2021-09-18T13:37:44+00:00"
+        },
+        {
+            "name": "sietse85/nova-button",
+            "version": "1.0.20",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sietse85/nova-button.git",
+                "reference": "48f2e22e29777b93bb1fbf11fe1a101ea1cf699e"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sietse85/nova-button/zipball/48f2e22e29777b93bb1fbf11fe1a101ea1cf699e",
+                "reference": "48f2e22e29777b93bb1fbf11fe1a101ea1cf699e",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/nova": "^4.0",
+                "php": "^7.4|^8.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Sietse85\\NovaButton\\FieldServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Sietse85\\NovaButton\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Sietse Sietsma",
+                    "email": "sietse85@gmail.com"
+                },
+                {
+                    "name": "Danique Wijnalda",
+                    "email": "hello@dnwjn.dev"
+                },
+                {
+                    "name": "Brian Dillingham",
+                    "email": "bdillingham88@gmail.com"
+                }
+            ],
+            "description": "(Nova 4+) A Laravel Nova package for adding buttons to your resources.",
+            "keywords": [
+                "button",
+                "field",
+                "laravel",
+                "nova",
+                "nova4"
+            ],
+            "support": {
+                "issues": "https://github.com/sietse85/nova-button/issues",
+                "source": "https://github.com/sietse85/nova-button/tree/v1.0.20"
+            },
+            "time": "2022-08-30T08:14:12+00:00"
         },
         {
             "name": "socialiteproviders/manager",
