@@ -31,8 +31,12 @@ Route::prefix('products')->group(function () {
 
 Route::post('auth/register', [Controller\AuthController::class, 'register']);
 Route::post('auth/login', [Controller\AuthController::class, 'login']);
+Route::post('auth/logout', [Controller\AuthController::class, 'logout']);
 Route::post('auth/refresh', [Controller\AuthController::class, 'refresh'])->middleware('auth:sanctum');
 Route::get('auth/me', [Controller\AuthController::class, 'profile'])->middleware('auth:sanctum');
+
+Route::post('auth/forgot-password', [Controller\PasswordResetController::class, 'createPasswordResetToken']);
+Route::post('auth/reset-password', [Controller\PasswordResetController::class, 'resetPassword']);
 
 Route::get('customers/popular', [Controller\CustomerController::class, 'listPopular']);
 Route::get('customers/{customer}', [Controller\CustomerController::class, 'show']);

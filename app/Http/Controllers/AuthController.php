@@ -15,6 +15,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class AuthController
 {
@@ -53,6 +54,14 @@ class AuthController
         return response()->json([
             'token' => $user->createToken('web')->plainTextToken
         ]);
+    }
+
+    public function logout(Request $request): JsonResponse
+    {
+        $user = $request->user();
+        $user->tokens()->delete();
+
+        return response()->json(status: Response::HTTP_NO_CONTENT);
     }
 
     public function profile(Request $request): JsonResource
