@@ -10,7 +10,9 @@ use App\Http\Requests\CreateProductReviewRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Resources\ProductReviewResource;
 use App\Models\Customer;
+use App\Models\Enums\ProductStatus;
 use App\Models\ProductReview;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductReviewController
@@ -37,8 +39,12 @@ class ProductReviewController
     public function listByCustomer(string $customerId, PaginationRequest $paginationRequest): JsonResource
     {
         $reviewsQuery = ProductReview::query()
-            ->where('customer_id', $customerId)
             ->where('is_moderated', true)
+            ->whereHas('product', function (Builder $query) use ($customerId) {
+                return $query
+                    ->where('owner_id', $customerId)
+                    ->where('status', ProductStatus::ACTIVE);
+            })
             ->latest();
 
         return ProductReviewResource::collection(

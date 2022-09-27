@@ -34,4 +34,9 @@ class ProductReview extends Model
     {
         return $this->belongsTo(Customer::class);
     }
+
+    public function product(): BelongsTo
+    {
+        return $this->belongsTo(Product::class);
+    }
 }
