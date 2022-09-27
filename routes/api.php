@@ -33,7 +33,7 @@ Route::prefix('products')->group(function () {
     Route::get('{id}', [Controller\ProductController::class, 'show']);
 });
 
-Route::get('reviews-by-customer/{customer}', [Controller\ProductReviewController::class, 'listByCustomer']);
+Route::get('reviews/by-customer/{customer}', [Controller\ProductReviewController::class, 'listByCustomer']);
 
 Route::post('auth/register', [Controller\AuthController::class, 'register']);
 Route::post('auth/login', [Controller\AuthController::class, 'login']);
