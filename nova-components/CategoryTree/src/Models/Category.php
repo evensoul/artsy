@@ -2,6 +2,7 @@
 
 namespace Fereron\CategoryTree\Models;
 
+use App\Models\Product;
 use App\Models\Traits\Uuid;
 use App\Nova\MenuBuilder\CategoryType;
 use Carbon\Carbon;
@@ -12,6 +13,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Fereron\CategoryTree\MenuBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -51,6 +53,11 @@ final class Category extends Model
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
+    }
+
+    public function products(): BelongsToMany
+    {
+        return $this->belongsToMany(Product::class, 'product_category', 'category_id', 'product_id');
     }
 
     public function itemsChildren($parentId)

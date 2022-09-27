@@ -7,6 +7,7 @@ use Laravel\Socialite\Facades\Socialite;
 
 Route::get('categories-tree', [Controller\CategoryController::class, 'tree']);
 Route::get('categories/{category}', [Controller\CategoryController::class, 'show']);
+Route::get('categories/by-customer/{customer}', [Controller\CategoryController::class, 'listByCustomer']);
 
 Route::get('attributes', [Controller\AttributeController::class, 'list']);
 
@@ -16,8 +17,11 @@ Route::prefix('products')->group(function () {
     Route::get('vip', [Controller\ProductController::class, 'vip']);
     Route::get('recent-viewed', [Controller\ProductController::class, 'recentViewed']);
     Route::post('/', [Controller\ProductController::class, 'create'])->middleware('auth:sanctum');
-    Route::get('my', [Controller\ProductController::class, 'my'])->middleware('auth:sanctum');
-    Route::get('my/{id}', [Controller\ProductController::class, 'showMy'])->middleware('auth:sanctum');
+
+    Route::get('my', [Controller\MyProductController::class, 'show'])->middleware('auth:sanctum');
+    Route::get('my/{id}', [Controller\MyProductController::class, 'list'])->middleware('auth:sanctum');
+    Route::patch('my/{id}', [Controller\MyProductController::class, 'update'])->middleware('auth:sanctum');
+    Route::delete('my/{id}', [Controller\MyProductController::class, 'delete'])->middleware('auth:sanctum');
 
     Route::get('wish-list', [Controller\WishListController::class, 'list'])->middleware('auth:sanctum');
     Route::post('/{product}/wish-list', [Controller\WishListController::class, 'addProduct'])->middleware('auth:sanctum');
@@ -29,9 +33,11 @@ Route::prefix('products')->group(function () {
     Route::get('{id}', [Controller\ProductController::class, 'show']);
 });
 
+Route::get('reviews-by-customer/{customer}', [Controller\ProductReviewController::class, 'listByCustomer']);
+
 Route::post('auth/register', [Controller\AuthController::class, 'register']);
 Route::post('auth/login', [Controller\AuthController::class, 'login']);
-Route::post('auth/logout', [Controller\AuthController::class, 'logout']);
+Route::post('auth/logout', [Controller\AuthController::class, 'logout'])->middleware('auth:sanctum');
 Route::post('auth/refresh', [Controller\AuthController::class, 'refresh'])->middleware('auth:sanctum');
 Route::get('auth/me', [Controller\AuthController::class, 'profile'])->middleware('auth:sanctum');
 

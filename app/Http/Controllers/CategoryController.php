@@ -6,7 +6,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\CategoryFullResource;
 use App\Http\Resources\CategoryResource;
+use App\Models\Customer;
+use App\Models\Enums\ProductStatus;
+use App\Models\Product;
 use Fereron\CategoryTree\Models\Category;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 final class CategoryController
@@ -28,5 +32,17 @@ final class CategoryController
     public function show(Category $category): CategoryFullResource
     {
         return new CategoryFullResource($category);
+    }
+
+    public function listByCustomer(Customer $customer): JsonResource
+    {
+        $categoriesQuery = Category::query()
+            ->whereHas('products', function (Builder $query) use ($customer) {
+                return $query
+                    ->where('owner_id', $customer->id)
+                    ->where('status', ProductStatus::ACTIVE);
+            });
+
+        return CategoryResource::collection($categoriesQuery->get());
     }
 }

@@ -10,12 +10,10 @@ use App\Events\ProductViewed;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\PaginationRequest;
 use App\Http\Requests\ProductFilterRequest;
-use App\Http\Requests\ProductsMyFilterRequest;
 use App\Http\Requests\ProductsSearchRequest;
 use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductFullResource;
 use App\Http\Resources\ProductMyFullResource;
-use App\Http\Resources\ProductMyResource;
 use App\Http\Resources\ProductResource;
 use App\Models\Enums\ProductStatus;
 use App\Models\Product;
@@ -27,7 +25,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 class ProductController
 {
     public function __construct(
-        private readonly ProductRepository $productRepository,
         private readonly Dispatcher $dispatcher,
     ) {}
 
@@ -60,28 +57,6 @@ class ProductController
         return ProductResource::collection(
             $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
         );
-    }
-
-    public function my(PaginationRequest $paginationRequest, ProductsMyFilterRequest $productFilterRequest): JsonResource
-    {
-        $productsQuery = $this->productRepository->findMyByCriteriaQB($productFilterRequest->user()->id, $productFilterRequest);
-
-        return ProductMyResource::collection(
-            $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
-        );
-    }
-
-    public function showMy(string $id, Request $request): JsonResource
-    {
-        $product = Product::query()
-            ->with([
-                'owner',
-                'categories' => ['parent']
-            ])
-            ->where('owner_id', $request->user()->id)
-            ->findOrFail($id);
-
-        return new ProductMyFullResource($product);
     }
 
     public function show(string $id): JsonResource
