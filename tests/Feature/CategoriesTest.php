@@ -9,7 +9,7 @@ use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Tests\Traits\CustomerStub;
 
-class CustomerTest extends TestCase
+class CategoriesTest extends TestCase
 {
     private const ENDPOINT_VIEW = 'api/v1/customers/%s';
     private const ENDPOINT_UPDATE = 'api/v1/customers/%s';

@@ -27,7 +27,7 @@ class MyProductController
         private readonly ProductRepository $productRepository
     ) {}
 
-    public function show(PaginationRequest $paginationRequest, ProductsMyFilterRequest $productFilterRequest): JsonResource
+    public function list(PaginationRequest $paginationRequest, ProductsMyFilterRequest $productFilterRequest): JsonResource
     {
         $productsQuery = $this->productRepository->findMyByCriteriaQB($productFilterRequest->user()->id, $productFilterRequest);
 
@@ -36,7 +36,7 @@ class MyProductController
         );
     }
 
-    public function list(string $id, Request $request): JsonResource
+    public function show(string $id, Request $request): JsonResource
     {
         $product = Product::query()
             ->with([

@@ -18,10 +18,10 @@ Route::prefix('products')->group(function () {
     Route::get('recent-viewed', [Controller\ProductController::class, 'recentViewed']);
     Route::post('/', [Controller\ProductController::class, 'create'])->middleware('auth:sanctum');
 
-    Route::get('my', [Controller\MyProductController::class, 'show'])->middleware('auth:sanctum');
-    Route::get('my/{id}', [Controller\MyProductController::class, 'list'])->middleware('auth:sanctum');
-    Route::patch('my/{id}', [Controller\MyProductController::class, 'update'])->middleware('auth:sanctum');
-    Route::delete('my/{id}', [Controller\MyProductController::class, 'delete'])->middleware('auth:sanctum');
+    Route::get('my', [Controller\MyProductController::class, 'list'])->middleware('auth:sanctum');
+    Route::get('my/{product}', [Controller\MyProductController::class, 'show'])->middleware('auth:sanctum');
+    Route::patch('my/{product}', [Controller\MyProductController::class, 'update'])->middleware('auth:sanctum');
+    Route::delete('my/{product}', [Controller\MyProductController::class, 'delete'])->middleware('auth:sanctum');
 
     Route::get('wish-list', [Controller\WishListController::class, 'list'])->middleware('auth:sanctum');
     Route::post('/{product}/wish-list', [Controller\WishListController::class, 'addProduct'])->middleware('auth:sanctum');
