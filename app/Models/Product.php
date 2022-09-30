@@ -29,6 +29,7 @@ use Laravel\Scout\Searchable;
  * @property integer|null discount
  * @property ProductStatus status
  * @property array images
+ * @property integer views_count
  * @property float rating
  * @property boolean is_preorder
  * @property \Carbon\Carbon published_at

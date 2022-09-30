@@ -21,7 +21,7 @@ final class ProductMyFullResource extends JsonResource
             'published_at'          => $this->published_at,
             'rating'                => $this->rating,
             'ratings_count'         => \random_int(10, 200),
-            'views_count'           => \random_int(10, 1000),
+            'views_count'           => $this->views_count,
             'is_preorder'           => $this->is_preorder,
             'is_wish'               => \random_int(0, 100) < 10,
             'has_review_with_photo' => \random_int(0, 100) < 5,
