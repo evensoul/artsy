@@ -31,10 +31,14 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'oauth_drivers' => [
+        'google', 'facebook', 'apple'
+    ],
+
     'google' => [
         'client_id' => env('GOOGLE_CLIENT_ID'),
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
-        'redirect' => 'http://example.com/auth/google/callback',
+        'redirect' => 'https://artsy-az.herokuapp.com',
     ],
 
 ];

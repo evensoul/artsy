@@ -56,18 +56,7 @@ Route::get('about/terms-of-use', [Controller\StaticPageController::class, 'terms
 Route::get('about/confidentiality', [Controller\StaticPageController::class, 'confidentiality']);
 
 
+Route::get('/auth/social', [Controller\OAuthController::class, 'getRedirectUrl']);
+Route::get('/auth/social/callback', [Controller\OAuthController::class, 'authCallback']);
+Route::get('/auth/social/attach-account', [Controller\OAuthController::class, 'attachSocial'])->middleware('auth:sanctum');
 
-
-
-
-
-Route::get('/auth/google/redirect', function () {
-    return Socialite::driver('google')->stateless()->redirect();
-
-});
-
-Route::get('/auth/google/callback', function () {
-    $user = Socialite::driver('google')->user();
-
-    // $user->token
-});

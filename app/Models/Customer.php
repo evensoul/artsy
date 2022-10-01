@@ -20,6 +20,9 @@ use Laravel\Sanctum\HasApiTokens;
  * @property null|string description
  * @property null|string avatar
  * @property null|string cover
+ * @property null|string google_id
+ * @property null|string facebook_id
+ * @property null|string apple_id
  * @property Product[] wish_list
  * @property Collection|Product[] recentViewedProducts
  */
