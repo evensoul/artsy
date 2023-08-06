@@ -29,7 +29,7 @@ final class BannerFactory extends Factory
                 'ru' => sprintf("<a href='http://google.com'>%s</a>", $this->faker->words(2, true)),
                 'az' => sprintf("<a href='http://google.com'>%s</a>", $this->faker->words(3, true)),
             ],
-            'cover' => 'test.jpg',
+//            'cover' => 'test.jpg',
         ];
     }
 }

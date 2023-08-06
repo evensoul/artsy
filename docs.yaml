@@ -1,0 +1,1692 @@
+openapi: 3.0.0
+info:
+  version: 1.0.0-oas3
+  title: Swagger Artsy
+tags:
+  - name: product
+    description: Operations about products
+  - name: category
+    description: Operations about categories
+  - name: banner
+    description: Operations about banners
+  - name: customer
+    description: Operations about customers
+paths:
+  /products:
+    get:
+      tags:
+        - product
+      summary: Получение списка товаров
+      parameters:
+        - in: query
+          name: perPage
+          description: Pagination perPage. default=8
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Pagination page. default=8
+          schema:
+            type: string
+        - in: query
+          name: filter[categoryIds]
+          description: Enables filtering by categories
+          schema:
+            type: string
+        - in: query
+          name: filter[ownerId]
+          description: Enables filtering by owner
+          schema:
+            type: string
+        - in: query
+          name: filter[attributeValuesIds]
+          description: Enables filtering by attributes
+          schema:
+            type: string
+            example: dacc8535-f680-454f-a3f7-80f07e7c975e,
+        - in: query
+          name: filter[price_min]
+          description: Enables filtering by min price
+          schema:
+            type: string
+            example: 100
+        - in: query
+          name: filter[price_max]
+          description: Enables filtering by max price
+          schema:
+            type: string
+            example: 100
+        - in: query
+          name: filter[has_discount]
+          description: Enables filtering only has discount
+          schema:
+            type: boolean
+            example: true
+        - in: query
+          name: sort
+          description: Enables sorting
+          schema:
+            type: string
+            enum:
+              - price_asc
+              - price_desc
+        - in: query
+          name: _enables[]
+          description: Дополнительные параметры в ответе
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - ownerData
+                - priceRange
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: Invalid request params
+    post:
+      tags:
+        - product
+      summary: Создание товара
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Багаж Бирка Роскошный чемодан Бирка Персонализированная сумка
+                descrption:
+                  type: string
+                  example: >-
+                    Модель выполнена из хлопка, отложной воротник, застежка на
+                    пуговицах, боковые карманы.
+                category_id:
+                  type: string
+                  format: uuid
+                price:
+                  type: string
+                  example: '494.45'
+                discount_type:
+                  type: string
+                  enum: [fixed, percent]
+                discount:
+                  type: string
+                  example: '30.00'
+                is_preorder:
+                  type: boolean
+                  example: true
+                images:
+                  type: array
+                  items:
+                    type: string
+                    example: 'base64 images'
+                attributes:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+      responses:
+        '201':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: Invalid request params
+  /products/search:
+    get:
+      tags:
+        - product
+      summary: Поиск по товарам
+      parameters:
+        - in: query
+          name: perPage
+          description: Pagination perPage. default=8
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Pagination page. default=8
+          schema:
+            type: string
+        - in: query
+          name: q
+          description: Search query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: Invalid request params
+
+  /products/vip:
+    get:
+      tags:
+        - product
+      summary: Получение списка VIP товаров
+      parameters:
+        - in: query
+          name: perPage
+          description: Pagination perPage. default=8
+          schema:
+            type: string
+        - in: query
+          name: filter[categoryIds]
+          description: Enables filtering by categories
+          schema:
+            type: string
+        - in: query
+          name: filter[ownerId]
+          description: Enables filtering by owner
+          schema:
+            type: string
+        - in: query
+          name: _enables[]
+          description: Дополнительные параметры в ответе
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - ownerData
+                - priceRange
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: Invalid request params
+  /products/recent-viewed:
+    get:
+      tags:
+        - product
+      summary: Получение списка недавно просмотренных товаров
+      parameters:
+        - in: query
+          name: perPage
+          description: Pagination perPage. default=8
+          schema:
+            type: string
+        - in: query
+          name: filter[categoryIds]
+          description: Enables filtering by categories
+          schema:
+            type: string
+        - in: query
+          name: filter[ownerId]
+          description: Enables filtering by owner
+          schema:
+            type: string
+        - in: query
+          name: _enables[]
+          description: Дополнительные параметры в ответе
+          explode: true
+          schema:
+            type: array
+            items:
+              type: string
+              enum:
+                - ownerData
+                - priceRange
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: Invalid request params
+  /products/my:
+    get:
+      tags:
+        - product
+      summary: Получение списка моих товаров
+      parameters:
+        - in: query
+          name: perPage
+          description: Pagination perPage. default=8
+          schema:
+            type: string
+        - in: query
+          name: filter[status]
+          description: Enables filtering by status
+          schema:
+            type: string
+            enum:
+              - active
+              - moderation
+              - disabled
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductMy'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: Invalid request params
+  /products/my/{productId}:
+    get:
+      tags:
+        - product
+      summary: Детальная информация о товаре
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ProductMyFull'
+    patch:
+      tags:
+        - product
+      summary: Редактирование товара
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  example: Багаж Бирка Роскошный чемодан Бирка Персонализированная сумка
+                descrption:
+                  type: string
+                  example: >-
+                    Модель выполнена из хлопка, отложной воротник, застежка на
+                    пуговицах, боковые карманы.
+                category_id:
+                  type: string
+                  format: uuid
+                price:
+                  type: string
+                  example: '494.45'
+                discount_type:
+                  type: string
+                  enum: [fixed, percent]
+                discount:
+                  type: string
+                  example: '30.00'
+                is_preorder:
+                  type: boolean
+                  example: true
+                images:
+                  type: array
+                  items:
+                    type: string
+                    example: 'base64 images'
+                attributes:
+                  type: array
+                  items:
+                    type: string
+                    format: uuid
+      responses:
+        '201':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: Invalid request params
+    delete:
+      tags:
+        - product
+      summary: Деактивация товара
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: OK
+
+  /products/{productId}:
+    get:
+      tags:
+        - product
+      summary: Детальная информация о товаре
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ProductFull'
+
+  /products/wish-list:
+    get:
+      tags:
+        - product
+      summary: Получение списка избранных товаров
+      parameters:
+        - in: query
+          name: perPage
+          description: Pagination perPage. default=8
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Product'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+        '400':
+          description: Invalid request params
+  /products/{productId}/wish-list:
+    post:
+      tags:
+        - product
+      summary: Добавление продукта в избранное
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '201':
+          description: OK
+    delete:
+      tags:
+        - product
+      summary: Удаление продукта из избранного
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: OK
+
+  /products/{productId}/reviews:
+    get:
+      tags:
+        - product
+      summary: Получение списка отзывов к товару
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: perPage
+          description: Pagination perPage. default=15
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Pagination page. default=1
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductReview'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+    post:
+      tags:
+        - product
+      summary: Добавление отзыва к товару
+      parameters:
+        - name: productId
+          in: path
+          description: ID of product
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                body:
+                  type: string
+                  example: >-
+                    Модель выполнена из хлопка, отложной воротник, застежка на
+                    пуговицах, боковые карманы.
+                rating:
+                  type: integer
+                  example: 4
+                images:
+                  type: array
+                  items:
+                    type: string
+                    example: 'base64 images'
+      responses:
+        '201':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/ProductReview'
+
+  /reviews/by-customer/{customerId}:
+    get:
+      tags:
+        - customer
+      summary: Список отзывов по товарам пользователя
+      parameters:
+        - name: customerId
+          in: path
+          description: ID of customer
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/ProductReview'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+
+  /attributes:
+    get:
+      tags:
+        - product
+      summary: Получение списка атрибутов
+      parameters:
+        - name: filter[categoryIds]
+          in: query
+          description: Enables filtering by categories
+          schema:
+            type: string
+            example: '3fa85f64-5717-4562-b3fc-2c963f66afa6,54f85f64-5717-4562-b3fc-2c963f66afa6'
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Attribute'
+
+
+  /categories-tree:
+    get:
+      tags:
+        - category
+      summary: Получение дерева категорий
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+  /categories/{categoryId}:
+    get:
+      tags:
+        - category
+      summary: Детальная информация о категории
+      parameters:
+        - name: categoryId
+          in: path
+          description: ID of category
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/CategoryFull'
+  /categories/by-customer/{customerId}:
+    get:
+      tags:
+        - customer
+      summary: Список категорий по пользователю
+      parameters:
+        - name: customerId
+          in: path
+          description: ID of customer
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Category'
+
+  /banners:
+    get:
+      tags:
+        - banner
+      summary: Получение списка баннеров
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Banner'
+  /customers/popular:
+    get:
+      tags:
+        - customer
+      summary: Получение списка популярных пользователей
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Customer'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+  /customers/{customerId}:
+    get:
+      tags:
+        - customer
+      summary: Получение профиля пользователя
+      parameters:
+        - name: customerId
+          in: path
+          description: ID of customer
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Customer'
+    patch:
+      tags:
+        - customer
+      summary: Обновление профиля пользователя
+      parameters:
+        - name: customerId
+          in: path
+          description: ID of customer
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John Cena
+                email:
+                  type: string
+                  example: john-cena@mail.com
+                phone:
+                  type: string
+                  nullable: true
+                  example: '+994 111-11-11'
+                address:
+                  type: string
+                  nullable: true
+                  example: 'Улица пушкина дом колотушкина'
+                description:
+                  type: string
+                  nullable: true
+                  example: 'Один из ведущих мировых дизайнерских брендов стиля, получивший признание за прославление сущности классического американского стиля.'
+                avatar:
+                  type: string
+                  nullable: true
+                  example: 'base 64 image'
+                cover:
+                  type: string
+                  nullable: true
+                  example: 'base 64 image'
+                current_password:
+                  type: string
+                  example: fuck
+                  nullable: true
+                password:
+                  type: string
+                  example: fuck-new
+                  nullable: true
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Customer'
+  /auth/register:
+    post:
+      tags:
+        - auth
+      summary: Регистрация пользователя
+      description: |
+        Запрос на регистрацию пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: John Cena
+                email:
+                  type: string
+                  example: john-cena@mail.com
+                phone:
+                  type: string
+                  example: +994551234567
+                password:
+                  type: string
+                  example: fuck
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Customer'
+  /auth/login:
+    post:
+      tags:
+        - auth
+      summary: Авторизация пользователя
+      description: |
+        Запрос на авторизацию пользователя
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: john-cena@mail.com
+                password:
+                  type: string
+                  example: fuck
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: kajskdjaskdjaksjdkasjl2jk31k23
+  /auth/refresh:
+    post:
+      tags:
+        - auth
+      summary: Рефреш токена
+      description: |
+        Запрос на рефреш токена
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: kajskdjaskdjaksjdkasjl2jk31k23
+  /auth/logout:
+    post:
+      tags:
+        - auth
+      summary: Инвалидация токена пользователя
+      description: |
+        Запрос на инвалидацию токена пользователя
+      responses:
+        '204':
+          description: OK
+  /auth/me:
+    get:
+      tags:
+        - auth
+      summary: Данные авторизованного пользователя
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Customer'
+
+  /auth/forgot-password:
+    post:
+      tags:
+        - auth
+      summary: Сброс пароля
+      description: |
+        Запрос на создание токена для сброса пароля.
+        Ссылка для сброса пароля с токеном отправляется на меил.
+        Пример ссылки: https://example.com/reset-password?token=asdjhasjhd
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: john-cena@mail.com
+      responses:
+        '204':
+          description: OK
+  /auth/reset-password:
+    post:
+      tags:
+        - auth
+      summary: Сброс пароля
+      description: |
+        Запрос на сброс пароля
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: john-cena@mail.com
+                token:
+                  type: string
+                  example: aksjdhashjdhasdkjhfsdk
+                password:
+                  type: string
+                  example: new_password
+                password_confirmation:
+                  type: string
+                  example: new_password
+      responses:
+        '204':
+          description: OK
+
+  /auth/social:
+    get:
+      tags:
+        - auth
+      summary: Авторизация через соцсети
+      description: |
+        Авторизация через соцсети и получение ссылки для последующего редиректа
+      parameters:
+        - in: query
+          name: driver
+          description: oAuth driver
+          schema:
+            type: string
+            example: google | facebook | apple
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  redirectUrl:
+                    type: string
+  /auth/social/callback:
+    get:
+      tags:
+        - auth
+      summary: Авторизация через соцсети
+      description: |
+        Коллбек запрос на авторизацию через соцсети
+      parameters:
+        - in: query
+          name: driver
+          description: oAuth driver
+          schema:
+            type: string
+            example: google | facebook | apple
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+  /auth/social/attach-account:
+    get:
+      tags:
+        - auth
+      summary: Авторизация через соцсети
+      description: |
+        Коллбек запрос на авторизацию через соцсети
+      parameters:
+        - in: query
+          name: driver
+          description: oAuth driver
+          schema:
+            type: string
+            example: google | facebook | apple
+      responses:
+        '204':
+          description: OK
+
+  /about/faq:
+    get:
+      tags:
+        - pages
+      summary: Получение списка faq
+      parameters:
+        - in: query
+          name: perPage
+          description: Pagination perPage. default=15
+          schema:
+            type: string
+        - in: query
+          name: page
+          description: Pagination page. default=1
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Faq'
+                  meta:
+                    $ref: '#/components/schemas/PaginationMeta'
+  /about/how-works:
+    get:
+      tags:
+        - pages
+      summary: Страница Как работает платформа?
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/StaticPageWithPhoto'
+  /about/safe-shopping:
+    get:
+      tags:
+        - pages
+      summary: Страница Безопасные покупки
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/StaticPage'
+  /about/terms-of-use:
+    get:
+      tags:
+        - pages
+      summary: Страница Безопасные покупки
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/StaticPage'
+  /about/confidentiality:
+    get:
+      tags:
+        - pages
+      summary: Страница Безопасные покупки
+      responses:
+        '200':
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+                properties:
+                  data:
+                    $ref: '#/components/schemas/StaticPage'
+servers:
+  - url: https://artsy-az.herokuapp.com/api/v1
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Одежда и обувь
+        is_new:
+          type: boolean
+          example: false
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          example:
+            - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+              title: Украшения для вечеринок
+              is_new: false
+              children:
+                - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  title: Украшения для вечеринок
+                  is_new: false
+                  children: []
+            - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+              title: Украшения для вечеринок
+              is_new: false
+              children: []
+    CategoryFull:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Одежда и обувь
+        parent:
+          $ref: '#/components/schemas/Category'
+        children:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          example:
+            - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+              title: Украшения для вечеринок
+              is_new: false
+              children:
+                - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+                  title: Украшения для вечеринок
+                  is_new: false
+                  children: []
+            - id: 3fa85f64-5717-4562-b3fc-2c963f66afa6
+              title: Украшения для вечеринок
+              is_new: false
+              children: []
+    Product:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        image:
+          type: string
+          example: >-
+            https://i.etsystatic.com/22592098/r/il/9c7b3b/3566076413/il_1588xN.3566076413_a0ym.jpg
+        title:
+          type: string
+          example: Багаж Бирка Роскошный чемодан Бирка Персонализированная сумка
+        descrption:
+          type: string
+          example: >-
+            Модель выполнена из хлопка, отложной воротник, застежка на
+            пуговицах, боковые карманы.
+        price:
+          type: string
+          example: '494.45'
+        price_with_discount:
+          type: string
+          example: '300.00'
+        discount:
+          type: integer
+          example: 20
+          description: Скидка в процентах
+        rating:
+          type: integer
+          example: 4
+        ratings_count:
+          type: integer
+          example: 130
+        is_wish:
+          type: boolean
+          example: false
+        is_top_seller:
+          type: boolean
+          example: true
+        owner:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+              example: Adidas Azerbaijan
+            avatar:
+              type: string
+              example: url
+            phone:
+              type: string
+              example: +994 50 993 55 55
+            address:
+              type: string
+              example: Аджеми Нахчывани, 53, Баку 1010, Азербайджан
+        priceRange:
+          type: object
+          properties:
+            from:
+              type: string
+              example: '20.14'
+            to:
+              type: string
+              example: '830.97'
+    ProductMy:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        image:
+          type: string
+          example: >-
+            https://i.etsystatic.com/22592098/r/il/9c7b3b/3566076413/il_1588xN.3566076413_a0ym.jpg
+        title:
+          type: string
+          example: Багаж Бирка Роскошный чемодан Бирка Персонализированная сумка
+        status:
+          type: string
+          enum:
+            - active
+            - moderation
+            - disabled
+        price:
+          type: string
+          example: '494.45'
+        price_with_discount:
+          type: string
+          example: '300.00'
+        is_vip:
+          type: boolean
+          example: false
+    ProductMyFull:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        status:
+          type: string
+          example: disabled
+        images:
+          type: array
+          items:
+            type: string
+            example: >-
+              https://i.etsystatic.com/22592098/r/il/9c7b3b/3566076413/il_1588xN.3566076413_a0ym.jpg
+        title:
+          type: string
+          example: Багаж Бирка Роскошный чемодан Бирка Персонализированная сумка
+        description:
+          type: string
+          example: Роскошный чемодан Бирка Персонализированная сумка
+        price:
+          type: string
+          example: '494.45'
+        price_with_discount:
+          type: string
+          example: '300.00'
+        published_at:
+          type: string
+          example: '2022-07-24T05:08:59'
+        rating:
+          type: integer
+          example: 4
+        ratings_count:
+          type: integer
+          example: 130
+        views_count:
+          type: integer
+          example: 721
+        is_wish:
+          type: boolean
+          example: false
+        is_preorder:
+          type: boolean
+          example: true
+        has_review_with_photo:
+          type: boolean
+          example: true
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductAttribute'
+        owner:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+              example: Adidas Azerbaijan
+            avatar:
+              type: string
+              example: url
+            phone:
+              type: string
+              example: +994 50 993 55 55
+            address:
+              type: string
+              example: Аджеми Нахчывани, 53, Баку 1010, Азербайджан
+        category:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+              example: Одежда для мужчин
+            parent:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+                  example: Одежда и обувь
+                parent:
+                  type: string
+                  example: null
+    ProductFull:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        images:
+          type: array
+          items:
+            type: string
+            example: >-
+              https://i.etsystatic.com/22592098/r/il/9c7b3b/3566076413/il_1588xN.3566076413_a0ym.jpg
+        title:
+          type: string
+          example: Багаж Бирка Роскошный чемодан Бирка Персонализированная сумка
+        description:
+          type: string
+          example: Роскошный чемодан Бирка Персонализированная сумка
+        price:
+          type: string
+          example: '494.45'
+        price_with_discount:
+          type: string
+          example: '300.00'
+        published_at:
+          type: string
+          example: '2022-07-24T05:08:59'
+        rating:
+          type: integer
+          example: 4
+        ratings_count:
+          type: integer
+          example: 130
+        views_count:
+          type: integer
+          example: 721
+        is_wish:
+          type: boolean
+          example: false
+        is_preorder:
+          type: boolean
+          example: true
+        has_review_with_photo:
+          type: boolean
+          example: true
+        attributes:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProductAttribute'
+        owner:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+              example: Adidas Azerbaijan
+            avatar:
+              type: string
+              example: url
+            phone:
+              type: string
+              example: +994 50 993 55 55
+            address:
+              type: string
+              example: Аджеми Нахчывани, 53, Баку 1010, Азербайджан
+        category:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            title:
+              type: string
+              example: Одежда для мужчин
+            parent:
+              type: object
+              properties:
+                id:
+                  type: string
+                  format: uuid
+                title:
+                  type: string
+                  example: Одежда и обувь
+                parent:
+                  type: string
+                  example: null
+    ProductReview:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        body:
+          type: string
+          example: Роскошный чемодан Бирка Персонализированная сумка
+        rating:
+          type: integer
+          example: 4
+        images:
+          type: array
+          items:
+            type: string
+            example: >-
+              https://i.etsystatic.com/22592098/r/il/9c7b3b/3566076413/il_1588xN.3566076413_a0ym.jpg
+        image:
+          type: string
+          example: >-
+            https://i.etsystatic.com/22592098/r/il/9c7b3b/3566076413/il_1588xN.3566076413_a0ym.jpg
+        created_at:
+          type: string
+          example: '2022-07-24T05:08:59'
+        product_id:
+          type: string
+          format: uuid
+        customer:
+          type: object
+          properties:
+            id:
+              type: string
+              format: uuid
+            name:
+              type: string
+              example: Adidas Azerbaijan
+            avatar:
+              type: string
+              example: url
+            phone:
+              type: string
+              example: +994 50 993 55 55
+            address:
+              type: string
+              example: Аджеми Нахчывани, 53, Баку 1010, Азербайджан
+    Banner:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Мы международная торговая площадка для уникальных вещей
+        subtitle:
+          type: string
+          example: >-
+            Где бъединяем людей, которые хотят создавать, продавать, покупать и
+            коллекционировать уникальные вещи на Artsy
+        link:
+          type: string
+          example: <a href"/faq">Как работает платформа?</a>
+        cover:
+          type: string
+          example: image url
+    Attribute:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: 'Brand'
+        values:
+          type: array
+          items:
+            $ref: '#/components/schemas/AttributeValue'
+
+    AttributeValue:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        value:
+          type: string
+          example: 'Apple'
+
+    ProductAttribute:
+      type: object
+      properties:
+        attribute_id:
+          type: string
+          format: uuid
+        attribute_title:
+          type: string
+          example: 'Brand'
+        attribute_value_id:
+          type: string
+          format: uuid
+        attribute_value:
+          type: string
+          example: 'Apple'
+
+    Customer:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+          example: John Cena
+        email:
+          type: string
+          example: john-cena@mail.com
+        phone:
+          type: string
+          nullable: true
+          example: '+994 111-11-11'
+        address:
+          type: string
+          nullable: true
+          example: 'Улица пушкина дом колотушкина'
+        description:
+          type: string
+          nullable: true
+          example: 'Один из ведущих мировых дизайнерских брендов стиля, получивший признание за прославление сущности классического американского стиля.'
+        avatar:
+          type: string
+          nullable: true
+          example: 'avatar image url'
+        cover:
+          type: string
+          nullable: true
+          example: 'cover image url'
+        rating:
+          type: number
+          example: 4.2
+        has_google:
+          type: boolean
+        has_facebook:
+          type: boolean
+        has_google:
+          type: boolean
+
+    Faq:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Как стать звездным продавцом
+        description:
+          type: string
+          example: Соответствие критериям звездного продавца будет оцениваться в первый день каждого месяца. Если вы соответствуете требованиям, в течение 24 часов к вашему магазину и панели звездного продавца будет добавлен значок звездного продавца.
+    StaticPage:
+      type: object
+      properties:
+        key:
+          type: string
+          example: 'how_works'
+        body:
+          type: string
+          example: "<h1><strong>Делаем электронную коммерцию человечнее</strong></h1><div><br>Artsy — международная торговая площадка для уникальных вещей.<br>Здесь можно найти множество необычных товаров: от изделий ручной работы до винтажных сокровищ.<br><br>На Artsy можно найти или заказать уникальные вещи со всего света.</div>"
+    StaticPageWithPhoto:
+      type: object
+      properties:
+        key:
+          type: string
+          example: 'how_works'
+        body:
+          type: string
+          example: "<h1><strong>Делаем электронную коммерцию человечнее</strong></h1><div><br>Artsy — международная торговая площадка для уникальных вещей.<br>Здесь можно найти множество необычных товаров: от изделий ручной работы до винтажных сокровищ.<br><br>На Artsy можно найти или заказать уникальные вещи со всего света.</div>"
+        photos:
+          type: array
+          items:
+            type: string
+            example: >-
+              https://i.etsystatic.com/22592098/r/il/9c7b3b/3566076413/il_1588xN.3566076413_a0ym.jpg
+
+
+    PaginationMeta:
+      type: object
+      properties:
+        current_page:
+          type: integer
+          example: 1
+        last_page:
+          type: integer
+          example: 3
+        per_page:
+          type: integer
+          example: 8
+        total:
+          type: integer
+          example: 22
+        from:
+          type: integer
+          example: 1
+        to:
+          type: integer
+          example: 8
