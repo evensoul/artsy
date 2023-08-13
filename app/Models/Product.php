@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Enums\ProductDiscountType;
 use App\Models\Enums\ProductStatus;
 use App\Models\Traits\Uuid;
+use Carbon\Carbon;
 use Fereron\CategoryTree\Models\Category;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -15,6 +16,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Laravel\Scout\Searchable;
 
@@ -35,6 +37,7 @@ use Laravel\Scout\Searchable;
  * @property \Carbon\Carbon published_at
  * @property Customer owner
  * @property ProductReview[] reviews
+ * @property null|ProductVip activeVip
  */
 class Product extends Model
 {
@@ -104,5 +107,17 @@ class Product extends Model
     public function reviews(): HasMany
     {
         return $this->hasMany(ProductReview::class);
+    }
+
+    public function vip(): HasMany
+    {
+        return $this->hasMany(ProductVip::class);
+    }
+
+    public function activeVip(): HasOne
+    {
+        return $this->hasOne(ProductVip::class)
+            ->where('start_date', '<', Carbon::now())
+            ->where('end_date', '>', Carbon::now());
     }
 }

@@ -72,4 +72,14 @@ class OAuthController
 
         return response()->json(status: 204);
     }
+
+    public function detachSocial(OauthRequest $request): JsonResponse
+    {
+        /** @var Customer $customer */
+        $customer = $request->user();
+        $customer->{sprintf('%s_id', $request->driver)} = null;
+        $customer->save();
+
+        return response()->json(status: 204);
+    }
 }

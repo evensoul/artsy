@@ -4,16 +4,12 @@ namespace Database\Seeders;
 
 use App\Models\Admin;
 use App\Models\Customer;
+use App\Models\VipPackage;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     *
-     * @return void
-     */
-    public function run()
+    public function run(): void
     {
         Customer::factory()->create([
             'name' => 'Customer',
@@ -23,5 +19,9 @@ class DatabaseSeeder extends Seeder
          $this->call(CategorySeeder::class);
          $this->call(ProductSeeder::class);
          $this->call(BannerSeeder::class);
+
+         VipPackage::query()->create(['days' => 5, 'price' => '15']);
+         VipPackage::query()->create(['days' => 15, 'price' => '30']);
+         VipPackage::query()->create(['days' => 30, 'price' => '50']);
     }
 }

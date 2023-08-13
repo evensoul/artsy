@@ -17,7 +17,7 @@ final class ProductMyResource extends JsonResource
             'status' => $this->status,
             'price' => $this->price,
             'price_with_discount' => $this->priceWithDiscount,
-            'is_vip' => \random_int(0, 100) < 5,
+            'is_vip' => null !== $this->activeVip,
         ];
     }
 }

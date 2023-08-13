@@ -19,6 +19,8 @@ Route::prefix('products')->group(function () {
     Route::post('/', [Controller\ProductController::class, 'create'])->middleware('auth:sanctum');
 
     Route::get('my', [Controller\MyProductController::class, 'list'])->middleware('auth:sanctum');
+    Route::post('my/{product}/vip/{package}', [Controller\MyProductController::class, 'makeVIP'])->middleware('auth:sanctum');
+//    Route::post('my/{product}/vip', [Controller\MyProductController::class, 'makeVIP'])->middleware('auth:sanctum');
     Route::get('my/{product}', [Controller\MyProductController::class, 'show'])->middleware('auth:sanctum');
     Route::patch('my/{product}', [Controller\MyProductController::class, 'update'])->middleware('auth:sanctum');
     Route::delete('my/{product}', [Controller\MyProductController::class, 'delete'])->middleware('auth:sanctum');
@@ -49,6 +51,7 @@ Route::get('customers/{customer}', [Controller\CustomerController::class, 'show'
 Route::patch('customers/{customer}', [Controller\CustomerController::class, 'update'])->middleware('auth:sanctum');
 
 Route::get('banners', [Controller\BannerController::class, 'list']);
+Route::get('vip-packages', [Controller\VipPackageController::class, 'list']);
 Route::get('about/faq', [Controller\StaticPageController::class, 'faq']);
 Route::get('about/how-works', [Controller\StaticPageController::class, 'howWorks']);
 Route::get('about/safe-shopping', [Controller\StaticPageController::class, 'safeShopping']);
@@ -59,4 +62,4 @@ Route::get('about/confidentiality', [Controller\StaticPageController::class, 'co
 Route::get('/auth/social', [Controller\OAuthController::class, 'getRedirectUrl']);
 Route::get('/auth/social/callback', [Controller\OAuthController::class, 'authCallback']);
 Route::get('/auth/social/attach-account', [Controller\OAuthController::class, 'attachSocial'])->middleware('auth:sanctum');
-
+Route::get('/auth/social/detach-account', [Controller\OAuthController::class, 'detachSocial'])->middleware('auth:sanctum');

@@ -9,6 +9,7 @@ use App\Models\AttributeValue;
 use App\Models\Customer;
 use App\Models\Enums\ProductStatus;
 use App\Models\Product;
+use App\Models\VipPackage;
 use Fereron\CategoryTree\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -21,6 +22,7 @@ class MyProductTest extends TestCase
     private const ENDPOINT_CREATE = 'api/v1/products';
     private const ENDPOINT_SHOW = 'api/v1/products/%s';
     private const ENDPOINT_MY_SHOW = 'api/v1/products/my/%s';
+    private const ENDPOINT_MAKE_VIP = 'api/v1/products/my/%s/vip/%s';
 
     /**
      * @see ProductController::create()
@@ -64,5 +66,22 @@ class MyProductTest extends TestCase
 
         $response = $this->deleteJson(sprintf(self::ENDPOINT_MY_SHOW, $productFixture->id));
         $response->assertStatus(204);
+    }
+
+    /**
+     * @see MyProductController::makeVIP()
+     */
+    public function test_product_make_vip(): void
+    {
+        /** @var Customer $customerFixture */
+        $customerFixture = Customer::factory()->create();
+        /** @var Product $productFixture */
+        $productFixture = Product::factory()->create(['status' => 'active', 'owner_id' => $customerFixture->id]);
+        Sanctum::actingAs($customerFixture);
+        /** @var VipPackage $vipPackage */
+        $vipPackage = VipPackage::query()->where('days', 5)->first();
+
+        $response = $this->post(sprintf(self::ENDPOINT_MAKE_VIP, $productFixture->id, $vipPackage->id));
+        $response->assertStatus(200);
     }
 }
