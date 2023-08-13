@@ -83,5 +83,6 @@ class MyProductTest extends TestCase
 
         $response = $this->post(sprintf(self::ENDPOINT_MAKE_VIP, $productFixture->id, $vipPackage->id));
         $response->assertStatus(200);
+        $this->assertNotNull($response->json('data.redirectUrl'));
     }
 }

@@ -97,7 +97,9 @@ class MyProductController
         $action->execute($product, $package);
 
         return response()->json([
-            'redirectUrl' => 'https://google.com'
+            'data' => [
+                'redirectUrl' => 'https://google.com'
+            ]
         ]);
     }
 }

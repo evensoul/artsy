@@ -20,7 +20,6 @@ Route::prefix('products')->group(function () {
 
     Route::get('my', [Controller\MyProductController::class, 'list'])->middleware('auth:sanctum');
     Route::post('my/{product}/vip/{package}', [Controller\MyProductController::class, 'makeVIP'])->middleware('auth:sanctum');
-//    Route::post('my/{product}/vip', [Controller\MyProductController::class, 'makeVIP'])->middleware('auth:sanctum');
     Route::get('my/{product}', [Controller\MyProductController::class, 'show'])->middleware('auth:sanctum');
     Route::patch('my/{product}', [Controller\MyProductController::class, 'update'])->middleware('auth:sanctum');
     Route::delete('my/{product}', [Controller\MyProductController::class, 'delete'])->middleware('auth:sanctum');
