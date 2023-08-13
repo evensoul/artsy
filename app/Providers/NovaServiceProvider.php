@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\Admin;
 use Fereron\CategoryTree\MenuBuilder;
 use Illuminate\Support\Facades\Gate;
 use Laravel\Nova\Nova;
@@ -42,9 +43,7 @@ class NovaServiceProvider extends NovaApplicationServiceProvider
     protected function gate()
     {
         Gate::define('viewNova', function ($user) {
-            return in_array($user->email, [
-                //
-            ]);
+            return Admin::query()->where('email', $user->email)->exists();
         });
     }
 
