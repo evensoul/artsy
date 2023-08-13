@@ -34,6 +34,8 @@ Route::prefix('products')->group(function () {
     Route::get('{id}', [Controller\ProductController::class, 'show']);
 });
 
+Route::get('my/payment-transactions', [Controller\PaymentTransactionController::class, 'getByCustomer']);
+
 Route::get('reviews/by-customer/{customer}', [Controller\ProductReviewController::class, 'listByCustomer']);
 
 Route::post('auth/register', [Controller\AuthController::class, 'register']);

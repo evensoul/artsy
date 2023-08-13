@@ -7,6 +7,7 @@ namespace App\Models;
 use App\Models\Enums\PaymentStatus;
 use App\Models\Enums\PaymentTransactionType;
 use App\Models\Traits\Uuid;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -23,6 +24,7 @@ use Spatie\Translatable\HasTranslations;
  * @property string type
  * @property string status
  * @property string amount
+ * @property Carbon created_at
  */
 class PaymentTransaction extends Model
 {

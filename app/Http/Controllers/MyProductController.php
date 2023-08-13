@@ -89,7 +89,7 @@ class MyProductController
         PaymentTransaction::query()->create([
             'product_id' => $product->id,
             'customer_id' => $request->user()->id,
-            'status' => PaymentStatus::STATUS_CREATED,
+            'status' => PaymentStatus::STATUS_APPROVED,
             'type' => PaymentTransactionType::PRODUCT_PREMIUM,
             'amount' => $package->price,
         ]);
