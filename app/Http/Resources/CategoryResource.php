@@ -13,7 +13,7 @@ final class CategoryResource extends JsonResource
         return [
             'id' => $this->id,
             'title' => $this->title,
-            'is_new' => $this->created_at->gt(now()->subWeek()), // todo discuss
+            'is_new' => $this->created_at->gt(now()->subWeek()),
             'children' => CategoryResource::collection($this->children),
         ];
     }

@@ -11,8 +11,9 @@
         "php": "^8.0.2",
         "ext-bcmath": "*",
         "ebess/advanced-nova-media-library": "^4.0",
+        "fakerphp/faker": "^1.9.1",
         "fereron/category-tree": "*",
-        "guzzlehttp/guzzle": "^7.2",
+        "guzzlehttp/guzzle": "^7.7",
         "laravel/framework": "^9.11",
         "laravel/nova": "*",
         "laravel/sanctum": "^2.14.1",
@@ -28,8 +29,7 @@
         "spatie/laravel-medialibrary": "^10.0.0",
         "spatie/laravel-translatable": "^6.0",
         "vmitchell85/nova-links": "2.0RC",
-        "whitecube/nova-flexible-content": "^1.0",
-        "fakerphp/faker": "^1.9.1"
+        "whitecube/nova-flexible-content": "^1.0"
     },
     "require-dev": {
         "laravel/sail": "^1.0.1",

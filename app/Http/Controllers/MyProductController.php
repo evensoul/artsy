@@ -20,6 +20,8 @@ use App\Models\PaymentTransaction;
 use App\Models\Product;
 use App\Models\VipPackage;
 use App\Repository\ProductRepository;
+use App\Service\KapitalBank\KapitalBankClient;
+use App\Service\KapitalBank\PurchaseDto;
 use Carbon\Carbon;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
@@ -80,11 +82,19 @@ class MyProductController
         return response()->json(status: Response::HTTP_NO_CONTENT);
     }
 
-    public function makeVIP(Product $product, VipPackage $package, Request $request, MakeProductVipAction $action): JsonResponse
+    public function makeVIP(Product $product, VipPackage $package, Request $request, MakeProductVipAction $action, KapitalBankClient $kapitalBankClient): JsonResponse
     {
         if ($request->user()->id !== $product->owner_id) {
             throw new AuthorizationException();
         }
+
+        $purchaseDto = new PurchaseDto(
+            amount: $package->price,
+            productId: $product->id,
+            productTitle: $product->title,
+        );
+
+//        $kapitalBankClient->purchase($purchaseDto);
 
         PaymentTransaction::query()->create([
             'product_id' => $product->id,

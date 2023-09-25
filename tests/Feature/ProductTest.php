@@ -8,6 +8,7 @@ use App\Models\AttributeValue;
 use App\Models\Customer;
 use App\Models\Enums\ProductStatus;
 use App\Models\Product;
+use App\Models\VipPackage;
 use Fereron\CategoryTree\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Sanctum\Sanctum;
@@ -20,6 +21,9 @@ class ProductTest extends TestCase
     private const ENDPOINT_CREATE = 'api/v1/products';
     private const ENDPOINT_SHOW = 'api/v1/products/%s';
     private const ENDPOINT_MY = 'api/v1/products/my';
+    private const ENDPOINT_RECENTLY_VIEWED = 'api/v1/products/recent-viewed';
+    private const ENDPOINT_VIP = 'api/v1/products/vip';
+    private const ENDPOINT_MAKE_VIP = 'api/v1/products/my/%s/vip/%s';
 
     /**
      * @see ProductController::create()
@@ -179,6 +183,58 @@ class ProductTest extends TestCase
     {
         $response = $this->get(self::ENDPOINT_LIST . '?_enables[]=priceRange');
 
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @see ProductController::recentViewed()
+     */
+    public function test_product_list_recently_viewed_anonymous(): void
+    {
+        $response = $this->get(self::ENDPOINT_RECENTLY_VIEWED);
+
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @see ProductController::recentViewed()
+     */
+    public function test_product_list_recently_viewed_authenticated(): void
+    {
+        /** @var Product $productFixture */
+        $productFixture = Product::factory()->create(['status' => ProductStatus::ACTIVE->value]);
+        /** @var Customer $customerFixture */
+        $customerFixture = Customer::factory()->create();
+        Sanctum::actingAs($customerFixture);
+
+        // view product
+        $this->get(sprintf(self::ENDPOINT_SHOW, $productFixture->id));
+
+        $response = $this->get(self::ENDPOINT_RECENTLY_VIEWED);
+        $response->assertStatus(200);
+
+        // check product in recently-viewed list
+        $this->assertEquals(1, $response->json('meta.total'));
+        $this->assertEquals($productFixture->id, $response->json('data')[0]['id']);
+    }
+
+    /**
+     * @see MyProductController::makeVIP()
+     */
+    public function test_product_vip_list(): void
+    {
+        /** @var Customer $customerFixture */
+        $customerFixture = Customer::factory()->create();
+        /** @var Product $productFixture */
+        $productFixture = Product::factory()->create(['status' => 'active', 'owner_id' => $customerFixture->id]);
+        Sanctum::actingAs($customerFixture);
+        /** @var VipPackage $vipPackage */
+        $vipPackage = VipPackage::query()->where('days', 5)->first();
+
+        $makeVipResponse = $this->post(sprintf(self::ENDPOINT_MAKE_VIP, $productFixture->id, $vipPackage->id));
+        $makeVipResponse->assertStatus(200);
+
+        $response = $this->get(self::ENDPOINT_VIP);
         $response->assertStatus(200);
     }
 }

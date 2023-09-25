@@ -38,6 +38,7 @@ use Laravel\Scout\Searchable;
  * @property Customer owner
  * @property ProductReview[] reviews
  * @property null|ProductVip activeVip
+ * @property AttributeValue[] attributesRelation
  */
 class Product extends Model
 {

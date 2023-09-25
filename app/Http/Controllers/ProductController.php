@@ -15,6 +15,7 @@ use App\Http\Resources\ProductCollection;
 use App\Http\Resources\ProductFullResource;
 use App\Http\Resources\ProductMyFullResource;
 use App\Http\Resources\ProductResource;
+use App\Models\Customer;
 use App\Models\Enums\ProductStatus;
 use App\Models\Product;
 use App\Repository\ProductRepository;
@@ -37,11 +38,10 @@ class ProductController
         );
     }
 
-    public function vip(PaginationRequest $paginationRequest): JsonResource
+    public function vip(PaginationRequest $paginationRequest, ProductFilterRequest $productFilterRequest): JsonResource
     {
-        $productsQuery = Product::query()
-            ->where('status', ProductStatus::ACTIVE)
-            ->inRandomOrder();
+        $productsQuery = ProductRepository::findAllByCriteriaQB($productFilterRequest);
+        $productsQuery->whereHas('activeVip');
 
         return ProductResource::collection(
             $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
@@ -50,9 +50,15 @@ class ProductController
 
     public function recentViewed(PaginationRequest $paginationRequest): JsonResource
     {
-        $productsQuery = Product::query()
-            ->where('status', ProductStatus::ACTIVE)
-            ->inRandomOrder();
+        /** @var null|Customer $customer */
+        $customer = $paginationRequest->user();
+
+        if (null === $customer) {
+            return ProductResource::collection([]);
+        }
+
+        $productsQuery = $customer->recentViewedProducts()
+            ->where('status', ProductStatus::ACTIVE);
 
         return ProductResource::collection(
             $productsQuery->paginate(perPage: $paginationRequest->perPage, page: $paginationRequest->page)
