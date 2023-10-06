@@ -33,5 +33,7 @@ jobs:
         run: chmod -R 777 storage bootstrap/cache
       - name: phpstan
         run: ./vendor/bin/phpstan analyse app --memory-limit=1G
+      - name: Database migration
+        run: php artisan migrate:seed
       - name: Run tests
         run: php artisan test
