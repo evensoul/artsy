@@ -102,7 +102,7 @@ class Base64Validator
      */
     public function validateBase64Mimes(string $attribute, $value, array $parameters, Validator $validator): bool
     {
-        return empty($value) || $validator->validateMimes($attribute, $this->convertToFile($value), $parameters);
+        return null === $value || '' === $value || $validator->validateMimes($attribute, $this->convertToFile($value), $parameters);
     }
 
     /**
@@ -115,7 +115,7 @@ class Base64Validator
      */
     public function validateBase64Between(string $attribute, $value, array $parameters, Validator $validator): bool
     {
-        return empty($value) || $validator->validateBetween($attribute, $this->convertToFile($value), $parameters);
+        return null === $value || '' === $value || $validator->validateBetween($attribute, $this->convertToFile($value), $parameters);
     }
 
     /**
@@ -128,7 +128,7 @@ class Base64Validator
      */
     public function validateBase64Size(string $attribute, $value, array $parameters, Validator $validator): bool
     {
-        return empty($value) || $validator->validateSize($attribute, $this->convertToFile($value), $parameters);
+        return null === $value || '' === $value || $validator->validateSize($attribute, $this->convertToFile($value), $parameters);
     }
 
     /**
@@ -166,7 +166,9 @@ class Base64Validator
             return true;
         }
 
-        if (! $this->isValidFileInstance($value) || ! $sizeDetails = @getimagesize($value->getRealPath())) {
+        $sizeDetails = @getimagesize($value->getRealPath());
+
+        if (! $this->isValidFileInstance($value) || false === $sizeDetails) {
             return false;
         }
 

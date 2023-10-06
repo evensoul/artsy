@@ -23,7 +23,9 @@ class AttributeValueResolver implements ResolverInterface
         return $values->map(function($value) use ($layouts) {
             $layout = $layouts->find('attribute-value-layout');
 
-            if(!$layout) return;
+            if(!$layout) {
+                return;
+            }
 
             return $layout->duplicateAndHydrate($value->id, [
                 'id' => $value->id,
@@ -58,5 +60,7 @@ class AttributeValueResolver implements ResolverInterface
             $model->values()->delete();
             $model->values()->createMany($values);
         });
+
+        return;
     }
 }

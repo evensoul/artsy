@@ -33,11 +33,15 @@ final class UpdateProfileRequest extends FormRequest
             'avatar'      => 'nullable|base64image|base64max:8000',
             'cover'       => 'nullable|base64image|base64max:8000',
 
-            'current_password' => ['nullable', 'required_with:password', function ($attribute, $value, $fail) use ($customer) {
-                if (!Hash::check($value, $customer->password)) {
-                    $fail('Your password was not updated, since the provided current password does not match.');
+            'current_password' => [
+                'nullable',
+                'required_with:password',
+                static function ($attribute, $value, $fail) use ($customer) {
+                    if (!Hash::check($value, $customer->password)) {
+                        $fail('Your password was not updated, since the provided current password does not match.');
+                    }
                 }
-            }],
+            ],
             'password' => 'nullable|string|confirmed|min:6'
         ];
     }

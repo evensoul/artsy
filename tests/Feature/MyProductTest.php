@@ -12,6 +12,7 @@ use App\Models\Product;
 use App\Models\VipPackage;
 use Fereron\CategoryTree\Models\Category;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Str;
 use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 use Tests\Traits\CustomerStub;

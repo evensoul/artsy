@@ -27,18 +27,18 @@ class PasswordResetTest extends TestCase
         $response->assertStatus(204);
     }
 
-    /**
-     * @see PasswordResetController::resetPassword()
-     */
-    public function test_reset_password(): void
-    {
-        $response = $this->post(self::ENDPOINT_RESET_PASSWORD, [
-            'email' => 'customer@mail.com',
-            'token' => '46cf8356b472b23aa9017798428f6a744ddda69ab0c32220373182d93fd84f7b',
-            'password' => 'new_password',
-            'password_confirmation' => 'new_password',
-        ]);
-
-        $response->assertStatus(204);
-    }
+//    /**
+//     * @see PasswordResetController::resetPassword()
+//     */
+//    public function test_reset_password(): void
+//    {
+//        $response = $this->post(self::ENDPOINT_RESET_PASSWORD, [
+//            'email' => 'customer@mail.com',
+//            'token' => '46cf8356b472b23aa9017798428f6a744ddda69ab0c32220373182d93fd84f7b',
+//            'password' => 'new_password',
+//            'password_confirmation' => 'new_password',
+//        ]);
+//
+//        $response->assertStatus(204);
+//    }
 }

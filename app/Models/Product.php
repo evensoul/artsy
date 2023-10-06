@@ -76,7 +76,9 @@ class Product extends Model
     {
         return new Attribute(
             get: function (): ?string {
-                if (!$this->discount) return null;
+                if (!$this->discount) {
+                    return null;
+                }
 
                 if ($this->discount_type === ProductDiscountType::FIXED) {
                     return \bcsub($this->price, (string)$this->discount);
