@@ -12,7 +12,7 @@ jobs:
       mysql:
         image: mysql:8.0.21
         env:
-          MYSQL_DATABASE: posts-test
+          MYSQL_DATABASE: artsy-tests
           MYSQL_ROOT_PASSWORD: root
         ports:
           - 3306:3306
@@ -24,7 +24,7 @@ jobs:
           php-version: '8.2'
       - uses: actions/checkout@v3
       - name: Copy .env
-        run: cp .env.example .env
+        run: cp .env.ci .env
       - name: Install Dependencies
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress
       - name: Generate key
