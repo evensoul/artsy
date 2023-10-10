@@ -2643,9 +2643,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.refreshData();
     },
     openAddModal: function openAddModal() {
-      this.update = false;
-      this.showAddModal = true;
-      console.log('openAddModal');
+      window.location.pathname = "admin/resources/categories/new";
     },
     closeModal: function closeModal() {
       this.showAddModal = false;
@@ -2691,29 +2689,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     editMenu: function editMenu(item) {
-      var _this3 = this;
-
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee3() {
-        var menuItem;
         return _regeneratorRuntime().wrap(function _callee3$(_context3) {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                console.log('editMenu');
-                _this3.update = true;
-                _context3.next = 4;
-                return _api__WEBPACK_IMPORTED_MODULE_0__["default"].getMenuItem(item.id);
+                window.location.pathname = "admin/resources/categories/".concat(item.id, "/edit");
 
-              case 4:
-                menuItem = _context3.sent.data;
-                _this3.newItem = menuItem;
-                _this3.showAddModal = true;
-                console.log(menuItem);
-                _this3.linkType = _this3.menuItemTypes.find(function (lt) {
-                  return lt["class"] === _this3.newItem["class"];
-                }) || {};
-
-              case 9:
+              case 1:
               case "end":
                 return _context3.stop();
             }
@@ -2726,7 +2709,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.showDeleteModal = true;
     },
     confirmItemDelete: function confirmItemDelete() {
-      var _this4 = this;
+      var _this3 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee4() {
         return _regeneratorRuntime().wrap(function _callee4$(_context4) {
@@ -2735,16 +2718,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context4.prev = 0;
                 _context4.next = 3;
-                return _api__WEBPACK_IMPORTED_MODULE_0__["default"].destroy(_this4.itemToDelete.id);
+                return _api__WEBPACK_IMPORTED_MODULE_0__["default"].destroy(_this3.itemToDelete.id);
 
               case 3:
                 _context4.next = 5;
-                return _this4.refreshData();
+                return _this3.refreshData();
 
               case 5:
-                Nova.success(_this4.__('novaMenuBuilder.toastDeleteSucces'));
-                _this4.itemToDelete = null;
-                _this4.showDeleteModal = false;
+                Nova.success(_this3.__('novaMenuBuilder.toastDeleteSucces'));
+                _this3.itemToDelete = null;
+                _this3.showDeleteModal = false;
                 _context4.next = 13;
                 break;
 
@@ -2752,7 +2735,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context4.prev = 10;
                 _context4.t0 = _context4["catch"](0);
 
-                _this4.handleErrors(_context4.t0);
+                _this3.handleErrors(_context4.t0);
 
               case 13:
               case "end":
@@ -2778,7 +2761,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.newItem.value = '';
     },
     confirmItemCreate: function confirmItemCreate() {
-      var _this5 = this;
+      var _this4 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee5() {
         return _regeneratorRuntime().wrap(function _callee5$(_context5) {
@@ -2786,18 +2769,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context5.prev = _context5.next) {
               case 0:
                 _context5.prev = 0;
-                _this5.errors = {};
+                _this4.errors = {};
                 _context5.next = 4;
-                return _api__WEBPACK_IMPORTED_MODULE_0__["default"].create(_this5.newItemData);
+                return _api__WEBPACK_IMPORTED_MODULE_0__["default"].create(_this4.newItemData);
 
               case 4:
-                _this5.refreshData();
+                _this4.refreshData();
 
-                _this5.showAddModal = false;
+                _this4.showAddModal = false;
 
-                _this5.resetNewItem();
+                _this4.resetNewItem();
 
-                Nova.success(_this5.__('novaMenuBuilder.toastCreateSuccess'));
+                Nova.success(_this4.__('novaMenuBuilder.toastCreateSuccess'));
                 _context5.next = 14;
                 break;
 
@@ -2806,7 +2789,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context5.t0 = _context5["catch"](0);
                 console.error(_context5.t0);
 
-                _this5.handleErrors(_context5.t0);
+                _this4.handleErrors(_context5.t0);
 
               case 14:
               case "end":
@@ -2817,7 +2800,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     updateItem: function updateItem() {
-      var _this6 = this;
+      var _this5 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee6() {
         return _regeneratorRuntime().wrap(function _callee6$(_context6) {
@@ -2826,20 +2809,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 console.log('updateItem');
                 _context6.prev = 1;
-                _this6.isMenuItemUpdating = true;
-                _this6.errors = {};
+                _this5.isMenuItemUpdating = true;
+                _this5.errors = {};
                 _context6.next = 6;
-                return _api__WEBPACK_IMPORTED_MODULE_0__["default"].update(_this6.newItem.id, _this6.newItemData);
+                return _api__WEBPACK_IMPORTED_MODULE_0__["default"].update(_this5.newItem.id, _this5.newItemData);
 
               case 6:
-                _this6.isMenuItemUpdating = false;
-                _this6.showAddModal = false;
-                Nova.success(_this6.__('novaMenuBuilder.toastUpdateSuccess'));
+                _this5.isMenuItemUpdating = false;
+                _this5.showAddModal = false;
+                Nova.success(_this5.__('novaMenuBuilder.toastUpdateSuccess'));
 
-                _this6.resetNewItem();
+                _this5.resetNewItem();
 
                 _context6.next = 12;
-                return _this6.refreshData();
+                return _this5.refreshData();
 
               case 12:
                 _context6.next = 18;
@@ -2848,9 +2831,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 14:
                 _context6.prev = 14;
                 _context6.t0 = _context6["catch"](1);
-                _this6.isMenuItemUpdating = false;
+                _this5.isMenuItemUpdating = false;
 
-                _this6.handleErrors(_context6.t0);
+                _this5.handleErrors(_context6.t0);
 
               case 18:
               case "end":
@@ -2861,7 +2844,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }))();
     },
     updateMenu: function updateMenu() {
-      var _this7 = this;
+      var _this6 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee7() {
         return _regeneratorRuntime().wrap(function _callee7$(_context7) {
@@ -2870,17 +2853,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
               case 0:
                 _context7.prev = 0;
                 _context7.next = 3;
-                return _api__WEBPACK_IMPORTED_MODULE_0__["default"].saveItems(_this7.resourceId, _this7.menuItems);
+                return _api__WEBPACK_IMPORTED_MODULE_0__["default"].saveItems(_this6.resourceId, _this6.menuItems);
 
               case 3:
-                Nova.success(_this7.__('novaMenuBuilder.toastReorderSuccess'));
+                Nova.success(_this6.__('novaMenuBuilder.toastReorderSuccess'));
                 _context7.next = 9;
                 break;
 
               case 6:
                 _context7.prev = 6;
                 _context7.t0 = _context7["catch"](0);
-                Nova.error(_this7.__('novaMenuBuilder.serverError'));
+                Nova.error(_this6.__('novaMenuBuilder.serverError'));
 
               case 9:
               case "end":
@@ -2901,7 +2884,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     },
     duplicateMenuItem: function duplicateMenuItem(item) {
-      var _this8 = this;
+      var _this7 = this;
 
       return _asyncToGenerator( /*#__PURE__*/_regeneratorRuntime().mark(function _callee8() {
         return _regeneratorRuntime().wrap(function _callee8$(_context8) {
@@ -2914,12 +2897,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
               case 3:
                 _context8.next = 5;
-                return _this8.refreshData();
+                return _this7.refreshData();
 
               case 5:
-                _this8.resetNewItem();
+                _this7.resetNewItem();
 
-                Nova.success(_this8.__('novaMenuBuilder.toastDuplicateSuccess'));
+                Nova.success(_this7.__('novaMenuBuilder.toastDuplicateSuccess'));
                 _context8.next = 12;
                 break;
 
@@ -2927,7 +2910,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 _context8.prev = 9;
                 _context8.t0 = _context8["catch"](0);
 
-                _this8.handleErrors(_context8.t0);
+                _this7.handleErrors(_context8.t0);
 
               case 12:
               case "end":

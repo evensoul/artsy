@@ -129,9 +129,7 @@ export default {
     },
 
     openAddModal() {
-      this.update = false;
-      this.showAddModal = true;
-        console.log('openAddModal');
+        window.location.pathname = `admin/resources/categories/new`;
     },
 
     closeModal() {
@@ -162,13 +160,7 @@ export default {
     },
 
     async editMenu(item) {
-        console.log('editMenu');
-      this.update = true;
-      const menuItem = (await api.getMenuItem(item.id)).data;
-      this.newItem = menuItem;
-      this.showAddModal = true;
-        console.log(menuItem);
-      this.linkType = this.menuItemTypes.find(lt => lt.class === this.newItem.class) || {};
+        window.location.pathname = `admin/resources/categories/${item.id}/edit`;
     },
 
     removeMenu(item) {

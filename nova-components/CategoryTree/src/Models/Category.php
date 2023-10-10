@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
 use Fereron\CategoryTree\MenuBuilder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Support\Str;
 use Spatie\Translatable\HasTranslations;
 
 /**
@@ -33,6 +34,25 @@ final class Category extends Model
     protected $with = ['children'];
     protected $class = CategoryType::class;
     public $translatable = ['title'];
+
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function (Category $category) {
+            if (empty($category->getAttribute($category->getKeyName()))) {
+                $category->setAttribute($category->getKeyName(), (string) Str::uuid());
+            }
+
+            if (null === $category->menu_id) {
+                $category->menu_id = 1;
+            }
+
+            if (null === $category->order) {
+                $category->order = Category::query()->max('order') + 1;
+            }
+        });
+    }
 
     protected $casts = [
         'is_active' => 'boolean',
