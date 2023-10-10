@@ -30,8 +30,7 @@ class Category extends Resource
             Boolean::make('Is active'),
 
             Select::make('Parent category', 'parent_id')
-                ->options(self::buildParentCategorySelectOptions($request->resourceId))
-                ->rules('required', 'max:255'),
+                ->options(self::buildParentCategorySelectOptions($request->resourceId)),
         ];
     }
 
